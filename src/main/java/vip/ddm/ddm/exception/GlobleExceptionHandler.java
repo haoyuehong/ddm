@@ -1,5 +1,6 @@
 package vip.ddm.ddm.exception;
 
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,13 +23,18 @@ public class GlobleExceptionHandler {
 
     @ExceptionHandler
     public Result<String> exceptionHandler(HttpServletRequest request, Exception e){
-        e.printStackTrace();
+        //e.printStackTrace();
+        System.out.println("==============>"+e.getClass());
         if(e instanceof BindException){
             BindException be =  (BindException)e;
             List<ObjectError> errorList = be.getAllErrors();
             String msg = "";
             msg = errorList.get(0).getDefaultMessage();
             return Result.error(CodeMsg.BIND_ERROR.fillArgs(msg));
+        }else if(e instanceof MyBatisSystemException){
+            MyBatisSystemException me = (MyBatisSystemException)e;
+            String msg =me.getRootCause().getLocalizedMessage();
+            return Result.error(CodeMsg.CODE_ERROR.fillArgs(msg));
         }else{
             return Result.error(CodeMsg.SERVER_ERROR);
         }
