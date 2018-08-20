@@ -1,5 +1,6 @@
 package vip.ddm.ddm.dao;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Goods;
 import vip.ddm.ddm.vo.GoodsVo;
@@ -56,4 +57,7 @@ public interface GoodsMapper {
     int updateByPrimaryKey(Goods record);
 
     List<GoodsVo> findByParam(@Param(value = "goods") Goods goods);
+
+    @Select("select * from goods where group_id = #{groupId} and status != 0")
+    List<Goods> findByGroupId(@Param(value = "groupId") Integer groupId);
 }

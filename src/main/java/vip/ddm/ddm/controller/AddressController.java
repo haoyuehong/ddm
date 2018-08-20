@@ -6,36 +6,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import vip.ddm.ddm.dto.GoodsDto;
-import vip.ddm.ddm.dto.GoodsQuesryDto;
+import vip.ddm.ddm.dto.AddressDto;
+import vip.ddm.ddm.dto.AddressQuesryDto;
 import vip.ddm.ddm.dto.IdQuery;
-import vip.ddm.ddm.model.Goods;
+import vip.ddm.ddm.model.Address;
 import vip.ddm.ddm.result.Result;
-import vip.ddm.ddm.service.GoodsService;
-import vip.ddm.ddm.vo.GoodsVo;
+import vip.ddm.ddm.service.AddressService;
 
 @RestController
-@RequestMapping("/goods")
-public class GoodsController {
-
+@RequestMapping("/address")
+public class AddressController {
     @Autowired
-    private GoodsService goodsService;
-
-    @RequestMapping(value = "/list",method = RequestMethod.POST)
-    public Result list(@RequestBody GoodsQuesryDto quesryDto){
-        PageInfo<GoodsVo> pageInfo = goodsService.goodsList(quesryDto.getGoods(), quesryDto.getPage(), quesryDto.getRows());
-        return Result.success(pageInfo);
-    }
+    private AddressService addressService;
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public Result save(@RequestBody GoodsDto goodsDto){
-        goodsService.save(goodsDto);
+    public Result save(@RequestBody AddressDto addressDto){
+        addressService.save(addressDto);
         return Result.success(true);
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     public Result save(@RequestBody IdQuery idQuery){
-        goodsService.delete(idQuery.getId());
+        addressService.delete(idQuery.getId());
         return Result.success(true);
+    }
+
+    @RequestMapping(value = "/list")
+    public Result<PageInfo<Address>> list(@RequestBody AddressQuesryDto addressQuesryDto){
+        return Result.success(addressService.list(addressQuesryDto.getAddress(),addressQuesryDto.getPage(),addressQuesryDto.getRows()));
     }
 }

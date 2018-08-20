@@ -22,6 +22,7 @@ public class CodeMsg {
 	public static CodeMsg GOODSOVER = new CodeMsg(500300,"商品已售罄");
 	public static CodeMsg GOOD_ID_NULL = new CodeMsg(500301,"商品id为空");
 	public static CodeMsg GOOD_NULL = new CodeMsg(500302,"找不到商品");
+	public static CodeMsg GOOD_DOWN = new CodeMsg(500303,"商品已下架或被删除");
 
 	//订单模块 5004XX
 	public static CodeMsg ORDER_NULL = new CodeMsg(500400,"订单为空");
@@ -29,6 +30,20 @@ public class CodeMsg {
 
 	//分组模块 5005XX
 	public static CodeMsg GROUP_ID_NULL = new CodeMsg(500500,"分组id为空");
+	public static CodeMsg GROUP_GOOD_NOT_NULL = new CodeMsg(500501,"分组下商品不为空,请先处理");
+	public static CodeMsg GROUP_NOT_FIND = new CodeMsg(500502,"未找到该分组");
+
+	//地址模块  5006XX
+	public static CodeMsg ADDRESS_ID_NULL = new CodeMsg(500600,"地址id为空");
+	public static CodeMsg ADDRESS_NULL = new CodeMsg(500601,"未找到这个地址");
+
+	//地址模块  5007XX
+	public static CodeMsg DISCOUNT_ID_NULL = new CodeMsg(500700,"折扣id为空");
+	public static CodeMsg DISCOUNT_NULL = new CodeMsg(500701,"该折扣信息折扣");
+
+
+
+
 	private CodeMsg(int code, String msg) {
 		this.code = code;
 		this.msg = msg;

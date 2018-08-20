@@ -1,6 +1,9 @@
 package vip.ddm.ddm.dao;
 
+import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Address;
+
+import java.util.List;
 
 public interface AddressMapper {
     /**
@@ -50,4 +53,6 @@ public interface AddressMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Address record);
+
+    List<Address> findList(@Param(value = "address") Address address);
 }

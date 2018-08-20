@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import vip.ddm.ddm.dao.GoodsMapper;
 import vip.ddm.ddm.dto.GoodsDto;
 import vip.ddm.ddm.exception.GlobleException;
+import vip.ddm.ddm.model.Discount;
 import vip.ddm.ddm.model.Goods;
 import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.vo.GoodsVo;
@@ -22,6 +23,8 @@ public class GoodsService {
 
     @Autowired
     private GoodsMapper goodsMapper;
+    @Autowired
+    private DisCountService disCountService;
 
     public void save(GoodsDto goodsDto){
         Goods goods = new Goods();
@@ -66,10 +69,16 @@ public class GoodsService {
                 goodsVo.setStrStatus("已删除");
             }
             String taste = goodsVo.getTaste();
-            if(!taste.equals(null) && !taste.equals("")){
+            if(!taste.equals("")){
                 String[] tastes = taste.split(SPLITE_STR);
-                List<String> tastList = (List<String>) Arrays.asList(tastes);
+                List<String> tastList = Arrays.asList(tastes);
                 goodsVo.setTasteStr(tastList);
+            }
+            Discount discount = disCountService.findByGoodsId(goodsVo.getId());
+            if(discount != null){
+                goodsVo.setDiscount("参与打折");
+                goodsVo.setDiscountPrice(discount.getDiscountPrice());
+
             }
         }
         return new PageInfo<>(goodsVos);
@@ -88,5 +97,14 @@ public class GoodsService {
             }
         }
         return str;
+    }
+
+
+    /**
+     * 根据分类查询
+     */
+    public List<Goods> findByGroupId(Integer groupId){
+        return goodsMapper.findByGroupId(groupId);
+
     }
 }

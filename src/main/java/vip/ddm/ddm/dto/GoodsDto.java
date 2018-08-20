@@ -32,10 +32,6 @@ public class GoodsDto {
 
     private Double boxPrice = 0.0;
 
-    private Byte discount = 0;//不打折
-
-    private Double discountPrice = null;
-
     private Byte status = 0;//0上架  1下架  2删除
 
     private List<String> taste; //口味
