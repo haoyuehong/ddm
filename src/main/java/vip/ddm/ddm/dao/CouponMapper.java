@@ -1,6 +1,9 @@
 package vip.ddm.ddm.dao;
 
+import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Coupon;
+
+import java.util.List;
 
 public interface CouponMapper {
     /**
@@ -50,4 +53,6 @@ public interface CouponMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Coupon record);
+
+    List<Coupon> list(@Param("coupon") Coupon coupon);
 }

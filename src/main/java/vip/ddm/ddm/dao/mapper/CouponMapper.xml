@@ -157,4 +157,22 @@
       status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="list" resultType="vip.ddm.ddm.model.Coupon">
+    select *
+    from coupon
+    where 1=1
+    <if test="status == null">
+      and status = 0
+    </if>
+    <if test="status != null">
+      and status = #{status}
+    </if>
+    <if test="name != null and name != ''">
+      and name like CONCAT('%','${name}','%')
+    </if>
+    <if test="price != null">
+      and price = #{price}
+    </if>
+  </select>
 </mapper>

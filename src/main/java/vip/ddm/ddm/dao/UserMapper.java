@@ -1,7 +1,7 @@
 package vip.ddm.ddm.dao;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.User;
 
 public interface UserMapper {
@@ -53,6 +53,8 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User record);
 
-    @Select("select * from user where openid = #{openid}")
+    @Select("select from user where openid = #{openid}")
     User findByOpenId(@Param("openid") String openid);
+
+
 }

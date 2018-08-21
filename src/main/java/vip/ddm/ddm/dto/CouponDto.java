@@ -39,7 +39,7 @@ public class CouponDto implements Serializable {
     @NotNull(message = "价格不能为空")
     private Double price; //价值
 
-    private int status = 0;
+    private Byte status = 0;
 
 
 }

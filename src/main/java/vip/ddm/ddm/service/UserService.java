@@ -51,8 +51,6 @@ public class UserService {
 
 
     public String savePhoneNum(@Valid UserDto userDto){
-        JSONObject jsonObject = getJsonObject(userDto);
-        String phoneNumber = (String)jsonObject.get("phoneNumber");
         Integer id = userDto.getId();
         if(id == null){
             throw new GlobleException(CodeMsg.USER_ID_NULL);
@@ -61,6 +59,10 @@ public class UserService {
         if(user == null){
             throw new GlobleException(CodeMsg.USER_NULL);
         }
+        JSONObject jsonObject = getJsonObject(userDto);
+        String phoneNumber = (String)jsonObject.get("phoneNumber");
+
+
         user.setTell(phoneNumber);
         userMapper.updateByPrimaryKey(user);
         return phoneNumber;

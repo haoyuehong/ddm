@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vip.ddm.ddm.dto.UserQueryDto;
 import vip.ddm.ddm.dto.UserTypeDto;
-import vip.ddm.ddm.model.User;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.UserService;
 
@@ -17,10 +16,11 @@ public class UserController {
     private UserService userService;
 
 
-    /*@RequestMapping("/list")
+    @RequestMapping("/list")
     public Result list(UserQueryDto userQueryDto){
 
-    }*/
+        return null;
+    }
 
 
     @RequestMapping("/updateType")
