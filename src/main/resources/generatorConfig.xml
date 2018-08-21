@@ -71,39 +71,6 @@
         </javaClientGenerator>
 		
 		<!-- 需要生成的实体的table -->
-        <!-- <table tableName="area" domainObjectName="Area" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="game" domainObjectName="Game" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="game_grade" domainObjectName="GameGrade" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="game_point_conf" domainObjectName="GamePointConf" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="classes" domainObjectName="Classes" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="fine_work" domainObjectName="FineWork" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="grade" domainObjectName="Grade" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="pdf_read_info" domainObjectName="PdfReadInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="pdf_resoure" domainObjectName="PdfResoure" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="school" domainObjectName="School" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="student_game_grade" domainObjectName="StudentGameGrade" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="student_grade_change" domainObjectName="StudentGradeChange" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
-       	<table tableName="teacher" domainObjectName="Teacher" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>  -->
-               
-        <!--<table tableName="area_user" domainObjectName="AreaUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-        <!--<table tableName="student" domainObjectName="Student" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-        <!--<table tableName="question_record" domainObjectName="QuestionRecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
         <!--<table tableName="goods_group" domainObjectName="GoodsGroup" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
         <!--<table tableName="address" domainObjectName="Address" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
@@ -112,7 +79,9 @@
         <!--<table tableName="goods" domainObjectName="Goods" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
-        <table tableName="discount" domainObjectName="Discount" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+        <!--<table tableName="discount" domainObjectName="Discount" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <table tableName="user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
     </context>

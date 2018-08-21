@@ -30,6 +30,10 @@ public class DisCountService {
     public void save(@Valid DiscountDto discountDto){
         Discount discount = new Discount();
         BeanUtils.copyProperties(discountDto,discount);
+        Discount byGoodsId = discountMapper.findByGoodsId(discount.getGoodsId());
+        if(byGoodsId != null){
+            throw new GlobleException(CodeMsg.GOOD_HAD_DISCOUNT);
+        }
         Goods goods = goodsMapper.selectByPrimaryKey(discount.getGoodsId());
         if(goods == null){
             throw new GlobleException(CodeMsg.GOOD_NULL);

@@ -18,11 +18,13 @@ public class CodeMsg {
 	public static CodeMsg MOBILE_ERROR = new CodeMsg(500213,"手机号错误");
 	public static CodeMsg MOBILE_NOT_EXIT = new CodeMsg(500214,"手机号不存在");
 	public static CodeMsg PASSWORD_ERROR = new CodeMsg(500215,"密码错误");
+
 	//商品模块 5003XX
 	public static CodeMsg GOODSOVER = new CodeMsg(500300,"商品已售罄");
 	public static CodeMsg GOOD_ID_NULL = new CodeMsg(500301,"商品id为空");
 	public static CodeMsg GOOD_NULL = new CodeMsg(500302,"找不到商品");
 	public static CodeMsg GOOD_DOWN = new CodeMsg(500303,"商品已下架或被删除");
+	public static CodeMsg GOOD_HAD_DISCOUNT = new CodeMsg(500304,"商品存在打折信息");
 
 	//订单模块 5004XX
 	public static CodeMsg ORDER_NULL = new CodeMsg(500400,"订单为空");
@@ -39,7 +41,19 @@ public class CodeMsg {
 
 	//地址模块  5007XX
 	public static CodeMsg DISCOUNT_ID_NULL = new CodeMsg(500700,"折扣id为空");
-	public static CodeMsg DISCOUNT_NULL = new CodeMsg(500701,"该折扣信息折扣");
+	public static CodeMsg DISCOUNT_NULL = new CodeMsg(500701,"找不到该折扣信息");
+
+	//优惠卷模块  5008XX
+	public static CodeMsg COUPON_ID_NULL = new CodeMsg(500800,"优惠卷id为空");
+	public static CodeMsg COUPON_NULL = new CodeMsg(500801,"找不到该信息折扣");
+
+	//人员模块 	5009XX
+	public static CodeMsg USER_SAVED = new CodeMsg(500900,"%s");
+	public static CodeMsg USER_NUSAVE = new CodeMsg(500901,"用户未保存");
+	public static CodeMsg USER_OPENID_FAIL = new CodeMsg(500902,"获取用户openid失败");
+	public static CodeMsg USER_INFO_FAIL = new CodeMsg(500903,"获取用户信息失败");
+	public static CodeMsg USER_NULL = new CodeMsg(500904,"用户不存在");
+	public static CodeMsg USER_ID_NULL = new CodeMsg(500905,"用户id为空");
 
 
 

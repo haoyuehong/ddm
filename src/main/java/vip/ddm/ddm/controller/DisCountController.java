@@ -38,8 +38,4 @@ public class DisCountController {
     public Result<PageInfo<DiscountVo>> list(@RequestBody DiscountQueryDto discountQueryDto){
         return Result.success(disCountService.list(discountQueryDto.getDiscount(),discountQueryDto.getPage(),discountQueryDto.getRows()));
     }
-
-
-
-
 }
