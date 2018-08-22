@@ -5,16 +5,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class IdQuery implements Serializable {
+@AllArgsConstructor
+public class UserCouponDto implements Serializable {
+
     private Integer id;
 
+    @NotNull
+    private Integer userId;
+
+    @NotNull
     private Integer couponId;
 
-    private Integer userId;
+    private Integer num = 1;
+
 }

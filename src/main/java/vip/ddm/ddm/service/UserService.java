@@ -22,12 +22,17 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    private String code;
+    private String session_key;
+
     /**
      * 检测用户是否已经保存
      */
     public CodeMsg checkSave(String code){
+        this.code = code;
         JSONObject jsonObject = WxGetUserInfo.getSessionKey(code);
         String openid = (String)jsonObject.get("openid");
+        session_key = (String)jsonObject.get("session_key");
         User user = userMapper.findByOpenId(openid);
         if(user != null){
             return CodeMsg.USER_SAVED.fillArgs(user.getId());
@@ -39,10 +44,9 @@ public class UserService {
     public void save(@Valid UserDto userDto){
         JSONObject jsonObject = getJsonObject(userDto);
         User user = new User();
-        user.setAge((Integer) jsonObject.get("openId"));
         user.setNickname((String) jsonObject.get("nickName"));
         user.setOpenid((String) jsonObject.get("openId"));
-        user.setSex((byte) jsonObject.get("gender"));
+        user.setSex(Byte.parseByte(jsonObject.get("gender").toString()) );
         user.setType(0);
         user.setDate(new Date());
         user.setAvatarurl((String)jsonObject.get("avatarUrl"));
@@ -69,8 +73,10 @@ public class UserService {
     }
 
     private JSONObject getJsonObject(UserDto userDto){
-        JSONObject sessionKey = WxGetUserInfo.getSessionKey(userDto.getCode());
-        String session_key = (String)sessionKey.get("session_key");
+        if(!userDto.getCode().equals(this.code)){
+            JSONObject sessionKey = WxGetUserInfo.getSessionKey(userDto.getCode());
+            session_key = (String)sessionKey.get("session_key");
+        }
         return  WxGetUserInfo.getUserInfo(userDto.getEncryptedData(), session_key, userDto.getIv());
     }
 

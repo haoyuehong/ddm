@@ -46,6 +46,9 @@ public class CodeMsg {
 	//优惠卷模块  5008XX
 	public static CodeMsg COUPON_ID_NULL = new CodeMsg(500800,"优惠卷id为空");
 	public static CodeMsg COUPON_NULL = new CodeMsg(500801,"找不到该信息折扣");
+	public static CodeMsg COUPON_BEGET = new CodeMsg(500802,"优惠卷已用户被领取，请勿删除");
+	public static CodeMsg FULL_DOWN_ID_NULL = new CodeMsg(500803,"满减活动id为空");
+	public static CodeMsg FULL_DOWN_NULL = new CodeMsg(500804,"满减活动为空");
 
 	//人员模块 	5009XX
 	public static CodeMsg USER_SAVED = new CodeMsg(500900,"%s");

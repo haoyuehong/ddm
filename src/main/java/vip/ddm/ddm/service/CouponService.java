@@ -10,6 +10,7 @@ import vip.ddm.ddm.dto.CouponDto;
 import vip.ddm.ddm.dto.CouponQuesryDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Coupon;
+import vip.ddm.ddm.model.User;
 import vip.ddm.ddm.result.CodeMsg;
 
 import javax.validation.Valid;
@@ -21,8 +22,11 @@ public class CouponService {
 
     @Autowired
     private CouponMapper couponMapper;
+    @Autowired
+    private UserCouponService userCouponService;
 
     public void save(@Valid CouponDto couponDto){
+
         Coupon coupon = new Coupon();
         BeanUtils.copyProperties(couponDto,coupon);
         if(coupon.getId() != null){
@@ -39,6 +43,10 @@ public class CouponService {
         Coupon coupon = couponMapper.selectByPrimaryKey(id);
         if(coupon == null){
             throw new GlobleException(CodeMsg.COUPON_NULL);
+        }
+        List<User> users = userCouponService.selectByCouponId(id);
+        if(users.size()>0){
+            throw new GlobleException(CodeMsg.COUPON_BEGET);
         }
         coupon.setStatus((byte)1);
         couponMapper.updateByPrimaryKey(coupon);

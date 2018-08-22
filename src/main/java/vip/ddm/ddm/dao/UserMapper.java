@@ -53,7 +53,7 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User record);
 
-    @Select("select from user where openid = #{openid}")
+    @Select("select * from user where openid = #{openid}")
     User findByOpenId(@Param("openid") String openid);
 
 

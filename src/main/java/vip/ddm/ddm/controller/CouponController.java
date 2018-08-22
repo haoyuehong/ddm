@@ -13,6 +13,7 @@ import vip.ddm.ddm.dto.IdQuery;
 import vip.ddm.ddm.model.Coupon;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.CouponService;
+import vip.ddm.ddm.service.UserCouponService;
 
 import javax.validation.Valid;
 
@@ -22,6 +23,8 @@ public class CouponController {
 
     @Autowired
     private CouponService couponService;
+    @Autowired
+    private UserCouponService userCouponService;
 
     @RequestMapping("/save")
     public Result save(@RequestBody CouponDto couponDto){
@@ -38,5 +41,15 @@ public class CouponController {
     @RequestMapping("/list")
     public Result<PageInfo<Coupon>> list(@RequestBody CouponQuesryDto couponQuesryDto){
         return Result.success(couponService.list(couponQuesryDto));
+    }
+
+    /**
+     * 查询那些人拥有该优惠卷
+     * @param idQuery
+     * @return
+     */
+    @RequestMapping("/findUser")
+    public Result findByUser(@RequestBody IdQuery idQuery){
+        return Result.success(userCouponService.selectByCouponId(idQuery.getCouponId()));
     }
 }
