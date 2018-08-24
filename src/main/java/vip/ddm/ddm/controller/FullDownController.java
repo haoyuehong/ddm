@@ -2,6 +2,7 @@ package vip.ddm.ddm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vip.ddm.ddm.dto.FullDownDto;
@@ -18,19 +19,19 @@ public class FullDownController {
     private FullDownService fullDownService;
 
     @RequestMapping("/save")
-    public Result save(FullDownDto fullDownDto){
+    public Result save(@RequestBody FullDownDto fullDownDto){
         fullDownService.save(fullDownDto);
         return Result.success(true);
     }
 
     @RequestMapping("/delete")
-    public Result delete(IdQuery idQuery){
+    public Result delete(@RequestBody IdQuery idQuery){
         fullDownService.delete(idQuery.getId());
         return Result.success(true);
     }
 
     @RequestMapping("/list")
-    public Result delete(FullDown fullDown){
+    public Result list(@RequestBody FullDown fullDown){
         return Result.success(fullDownService.list(fullDown));
     }
 }

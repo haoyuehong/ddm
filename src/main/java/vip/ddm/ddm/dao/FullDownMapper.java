@@ -1,6 +1,8 @@
 package vip.ddm.ddm.dao;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
+import vip.ddm.ddm.model.Coupon;
 import vip.ddm.ddm.model.FullDown;
 
 import java.util.List;
@@ -55,4 +57,7 @@ public interface FullDownMapper {
     int updateByPrimaryKey(FullDown record);
 
     List<FullDown> findList(@Param("fullDown") FullDown fullDown);
+
+    @Select("select * from full_down where id = #{fullDownId} and status = #{status}")
+    FullDown findByIdAndStatus(@Param("fullDownId") Integer fullDownId, @Param("status") Integer status);
 }

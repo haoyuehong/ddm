@@ -27,7 +27,9 @@ public class CodeMsg {
 	public static CodeMsg GOOD_HAD_DISCOUNT = new CodeMsg(500304,"商品存在打折信息");
 
 	//订单模块 5004XX
-	public static CodeMsg ORDER_NULL = new CodeMsg(500400,"订单为空");
+	public static CodeMsg ORDER_ID_NULL = new CodeMsg(500400,"订单编号为空");
+	public static CodeMsg ORDER_NULL = new CodeMsg(500401,"订单为空");
+	public static CodeMsg TARGET_STATUS_NULL = new CodeMsg(500402,"目标状态为空");
 
 
 	//分组模块 5005XX

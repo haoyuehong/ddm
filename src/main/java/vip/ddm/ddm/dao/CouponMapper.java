@@ -1,5 +1,7 @@
 package vip.ddm.ddm.dao;
 
+import com.sun.istack.internal.Interned;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Coupon;
 
@@ -55,4 +57,7 @@ public interface CouponMapper {
     int updateByPrimaryKey(Coupon record);
 
     List<Coupon> list(@Param("coupon") Coupon coupon);
+
+    @Select("select * from coupon where id = #{couponId} and status = #{status}")
+    Coupon findByIdAndStatus(@Param("couponId") Integer couponId, @Param("status") Integer status);
 }
