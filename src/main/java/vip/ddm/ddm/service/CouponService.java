@@ -57,4 +57,5 @@ public class CouponService {
         List<Coupon> coupons = couponMapper.list(couponQuesryDto.getCoupon());
         return new PageInfo<>(coupons);
     }
+
 }

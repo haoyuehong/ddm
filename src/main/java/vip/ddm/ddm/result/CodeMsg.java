@@ -12,12 +12,11 @@ public class CodeMsg {
 	public static CodeMsg CODE_ERROR = new CodeMsg(500102, "代码错误：%s");
 
 	//登录模块 5002XX
-	public static CodeMsg SESSION_ERROR = new CodeMsg(500210,"session不存在或已失效");
-	public static CodeMsg PASSWORD_EMPTY = new CodeMsg(500211,"密码不能为空");
-	public static CodeMsg MOBILE_EMPTY = new CodeMsg(500212,"手机号不能为空");
-	public static CodeMsg MOBILE_ERROR = new CodeMsg(500213,"手机号错误");
-	public static CodeMsg MOBILE_NOT_EXIT = new CodeMsg(500214,"手机号不存在");
-	public static CodeMsg PASSWORD_ERROR = new CodeMsg(500215,"密码错误");
+	public static CodeMsg SESSION_ERROR = new CodeMsg(500200,"session不存在或已失效");
+	public static CodeMsg UNAUTHORIZED = new CodeMsg(500201,"密码不能为空");
+	public static CodeMsg STORE_INFO_ERROR = new CodeMsg(500202,"店铺信息错误");
+	public static CodeMsg UNLOGIN = new CodeMsg(500203,"未登录");
+
 
 	//商品模块 5003XX
 	public static CodeMsg GOODSOVER = new CodeMsg(500300,"商品已售罄");
@@ -59,6 +58,10 @@ public class CodeMsg {
 	public static CodeMsg USER_INFO_FAIL = new CodeMsg(500903,"获取用户信息失败");
 	public static CodeMsg USER_NULL = new CodeMsg(500904,"用户不存在");
 	public static CodeMsg USER_ID_NULL = new CodeMsg(500905,"用户id为空");
+
+	//店铺模块 	5010XX
+	public static CodeMsg  STORE_ID_NULL= new CodeMsg(501000,"店铺id为空");
+	public static CodeMsg  STORE_NULL= new CodeMsg(501001,"店铺为空");
 
 
 

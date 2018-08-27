@@ -15,12 +15,9 @@ public class DdmApplicationTests {
     @Autowired
     private GoodsGroupService goodsGroupService;
 
-    /*@Test
+    @Test
     public void contextLoads() {
-        GoodsGroup goodsGroup = new GoodsGroup();
-        goodsGroup.setId(1);
-        goodsGroup.setGroupName("水果");
-        goodsGroupService.save(goodsGroup);
-    }*/
+        System.out.println("123");
+    }
 
 }

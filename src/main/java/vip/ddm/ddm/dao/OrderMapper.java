@@ -1,5 +1,6 @@
 package vip.ddm.ddm.dao;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Order;
 import vip.ddm.ddm.vo.OrderVo;
@@ -56,4 +57,7 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
     List<OrderVo> list(@Param("order") Order order, @Param("key") String key);
+
+    @Select("select * from order where user_id = #{userId} and status <= 3")
+    List<Order> selectByUserId(@Param("userId") Integer userId);
 }

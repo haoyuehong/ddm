@@ -5,6 +5,7 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.socket.config.annotation.*;
 
+/*
 @Configuration
 @EnableScheduling
 @EnableWebSocketMessageBroker
@@ -26,4 +27,4 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		registry.addEndpoint("/webServer").setAllowedOrigins("*").withSockJS();
 		System.out.println("服务端启动成功");
 	}
-}
+}*/

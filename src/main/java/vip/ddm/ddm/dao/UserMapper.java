@@ -3,6 +3,9 @@ package vip.ddm.ddm.dao;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.User;
+import vip.ddm.ddm.vo.UserVo;
+
+import java.util.List;
 
 public interface UserMapper {
     /**
@@ -57,4 +60,5 @@ public interface UserMapper {
     User findByOpenId(@Param("openid") String openid);
 
 
+    List<User> selectUserList(@Param("key") String key);
 }

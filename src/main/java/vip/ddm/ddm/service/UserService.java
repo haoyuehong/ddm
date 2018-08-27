@@ -1,26 +1,37 @@
 package vip.ddm.ddm.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vip.ddm.ddm.dao.UserMapper;
+import vip.ddm.ddm.dto.BaseQuery;
 import vip.ddm.ddm.dto.UserDto;
 import vip.ddm.ddm.dto.UserTypeDto;
 import vip.ddm.ddm.exception.GlobleException;
+import vip.ddm.ddm.model.Coupon;
+import vip.ddm.ddm.model.Order;
 import vip.ddm.ddm.model.User;
 import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.utils.WxGetUserInfo;
+import vip.ddm.ddm.vo.UserVo;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserCouponService userCouponService;
+    @Autowired
+    private OrderService orderService;
 
     private String code;
     private String session_key;
@@ -93,5 +104,21 @@ public class UserService {
         }
         user.setType(userTypeDto.getType());
         userMapper.updateByPrimaryKey(user);
+    }
+
+    public PageInfo<UserVo> list(BaseQuery baseQuery){
+        List<UserVo> userVoList = new ArrayList<>();
+        PageHelper.startPage(baseQuery.getPage(),baseQuery.getRows());
+        List<User> userList = userMapper.selectUserList(baseQuery.getKey());
+        for(User user : userList){
+            UserVo userVo = new UserVo();
+            BeanUtils.copyProperties(userVo,user);
+            List<Coupon> coupons = userCouponService.selectByUserId(user.getId());
+            userVo.setCouponNum(coupons.size());
+            List<Order> orders = orderService.findByUserId(user.getId());
+            userVo.setOrderNum(orders.size());
+            userVoList.add(userVo);
+        }
+        return new PageInfo<>(userVoList);
     }
 }

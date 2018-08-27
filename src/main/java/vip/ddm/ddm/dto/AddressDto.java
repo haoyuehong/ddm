@@ -20,4 +20,6 @@ public class AddressDto implements Serializable {
     private String address;
 
     private Byte status = 0;
+
+    private Integer storeId;
 }

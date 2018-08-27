@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vip.ddm.ddm.config.WebSocketController;
+//import vip.ddm.ddm.config.WebSocketController;
 import vip.ddm.ddm.dao.*;
 import vip.ddm.ddm.dto.OrderDto;
 import vip.ddm.ddm.dto.OrderGoodsDto;
@@ -31,8 +31,8 @@ public class OrderService {
     private OrderMapper orderMapper;
     @Autowired
     private OrderGoodsMapper orderGoodsMapper;
-    @Autowired
-    WebSocketController webSocketController;
+    /*@Autowired
+    WebSocketController webSocketController;*/
     @Autowired
     private GoodsMapper goodsMapper;
     @Autowired
@@ -65,7 +65,7 @@ public class OrderService {
         }
         orderMapper.insert(order);
         //推送消息 TODO
-        webSocketController.template.convertAndSendToUser("DDMVIP123123","/message","order"+id);
+        //webSocketController.template.convertAndSendToUser("DDMVIP123123","/message","order"+id);
     }
 
     public PageInfo<OrderVo> list(OrderQueryDto orderQueryDto){
@@ -127,6 +127,10 @@ public class OrderService {
         }
 
         return orderDetailVO;
+    }
+
+    public List<Order> findByUserId(Integer userId){
+        return orderMapper.selectByUserId(userId);
     }
 
 

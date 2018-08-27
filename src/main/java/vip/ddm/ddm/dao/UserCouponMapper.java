@@ -64,6 +64,7 @@ public interface UserCouponMapper {
     @Select("select c.* from user_coupon up, coupon c where up.coupon_id = c.id and up.user_id = #{userId} order by status ASC")
     List<Coupon> selectByUserId(@Param("userId")Integer userId);
 
+
     @Select("select u.* from user_coupon up, user u where up.coupon_id = u.id and up.coupon_id = #{couponId}")
     List<User> selectByCouponId(@Param("couponId")Integer couponId);
 }

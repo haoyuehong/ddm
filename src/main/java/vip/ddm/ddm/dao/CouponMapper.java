@@ -1,6 +1,6 @@
 package vip.ddm.ddm.dao;
 
-import com.sun.istack.internal.Interned;
+//import com.sun.istack.internal.Interned;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Coupon;

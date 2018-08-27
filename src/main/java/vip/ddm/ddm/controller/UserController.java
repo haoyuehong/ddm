@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vip.ddm.ddm.dto.IdQuery;
-import vip.ddm.ddm.dto.UserDto;
-import vip.ddm.ddm.dto.UserQueryDto;
-import vip.ddm.ddm.dto.UserTypeDto;
+import vip.ddm.ddm.dto.*;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.UserCouponService;
 import vip.ddm.ddm.service.UserService;
@@ -23,9 +20,9 @@ public class UserController {
 
 
     @RequestMapping("/list")
-    public Result list(UserQueryDto userQueryDto){
+    public Result list(BaseQuery baseQuery){
 
-        return null;
+        return Result.success( userService.list(baseQuery));
     }
 
 

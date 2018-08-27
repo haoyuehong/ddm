@@ -5,11 +5,13 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vip.ddm.ddm.common.OnlineUserInfo;
 import vip.ddm.ddm.dao.AddressMapper;
 import vip.ddm.ddm.dto.AddressDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Address;
 import vip.ddm.ddm.result.CodeMsg;
+import vip.ddm.ddm.utils.SessionUtil;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,9 +26,10 @@ public class AddressService {
         Address address = new Address();
         BeanUtils.copyProperties(addressDto,address);
         if(address.getId() != null){
-            addressMapper.updateByPrimaryKey(address);
+            addressMapper.updateByPrimaryKeySelective(address);
         }else{
             address.setStatus((byte)0);
+            address.setStoreId(SessionUtil.getOnlineSession().getId());
             addressMapper.insert(address);
         }
     }
