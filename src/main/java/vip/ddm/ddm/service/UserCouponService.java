@@ -28,7 +28,7 @@ public class UserCouponService {
         userCouponMapper.insertSelective(userCoupon);
     }
 
-    public void updateStatus(Integer couponId,Integer userId){
+    public void updateStatus(Integer couponId,Integer userId,Byte status){
         if(couponId == null || userId == null){
             throw new GlobleException(CodeMsg.USER_ID_NULL);
         }
@@ -36,7 +36,7 @@ public class UserCouponService {
         if(userCoupon == null){
             throw new GlobleException(CodeMsg.COUPON_NULL);
         }
-        userCoupon.setStatus((byte)1);
+        userCoupon.setStatus(status);
         userCouponMapper.updateByPrimaryKey(userCoupon);
     }
 

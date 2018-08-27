@@ -41,6 +41,8 @@ public class OrderService {
     private CouponMapper couponMapper;
     @Autowired
     private FullDownMapper fullDownMapper;
+    @Autowired
+    private UserCouponService userCouponService;
 
 
     @Transactional
@@ -58,8 +60,11 @@ public class OrderService {
             orderGoods.setNum(orderGoodsDto.getNum());
             orderGoodsMapper.insert(orderGoods);
         }
+        if(orderDto.getCouponId() != null){
+            userCouponService.updateStatus(orderDto.getCouponId(),orderDto.getUserId(),(byte)3);
+        }
         orderMapper.insert(order);
-        //推送消息
+        //推送消息 TODO
         webSocketController.template.convertAndSendToUser("DDMVIP123123","/message","order"+id);
     }
 
