@@ -1,7 +1,9 @@
 package vip.ddm.ddm.dao;
 
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import vip.ddm.ddm.model.Address;
+import vip.ddm.ddm.vo.AddressVo;
 
 import java.util.List;
 
@@ -54,5 +56,5 @@ public interface AddressMapper {
      */
     int updateByPrimaryKey(Address record);
 
-    List<Address> findList(@Param(value = "address") Address address);
+    List<AddressVo> findList(@Param("address") Address address);
 }

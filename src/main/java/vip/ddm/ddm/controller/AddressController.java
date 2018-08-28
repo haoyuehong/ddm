@@ -12,6 +12,7 @@ import vip.ddm.ddm.dto.IdQuery;
 import vip.ddm.ddm.model.Address;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.AddressService;
+import vip.ddm.ddm.vo.AddressVo;
 
 @RestController
 @RequestMapping("/address")
@@ -32,7 +33,7 @@ public class AddressController {
     }
 
     @RequestMapping(value = "/list")
-    public Result<PageInfo<Address>> list(@RequestBody AddressQuesryDto addressQuesryDto){
+    public Result<PageInfo<AddressVo>> list(@RequestBody AddressQuesryDto addressQuesryDto){
         return Result.success(addressService.list(addressQuesryDto.getAddress(),addressQuesryDto.getPage(),addressQuesryDto.getRows()));
     }
 }

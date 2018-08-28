@@ -54,4 +54,20 @@ public class StoreService {
     }
 
 
+    public void updateOrderStatus(StoreDto storeDto) {
+        if(storeDto.getId() == null){
+            throw new GlobleException(CodeMsg.STORE_ID_NULL);
+        }
+        Store store = storeMapper.selectByPrimaryKey(storeDto.getId());
+        if(store == null){
+            throw new GlobleException(CodeMsg.STORE_NULL);
+        }
+        if(storeDto.getAmOrderStatus() != null){
+            store.setAmOrderStatus(storeDto.getAmOrderStatus());
+        }
+        if(storeDto.getPmOrderStatus() != null){
+            store.setAmOrderStatus(storeDto.getPmOrderStatus());
+        }
+        storeMapper.updateByPrimaryKeySelective(store);
+    }
 }

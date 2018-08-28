@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -41,5 +42,11 @@ public class CouponDto implements Serializable {
 
     private Byte status = 0;
 
+    private Byte type;//0 无门槛指定价格（0）  1 指定品类指定价格  2全品类指定价格   3指定商品指定价格
 
+    private List<Integer> storeId;
+
+    private List<Integer> goodsIds;
+
+    private List<Integer> goodsGroupIds;
 }

@@ -36,4 +36,10 @@ public class StortController {
         List<Store> list = storeService.list(baseQuery);
         return Result.success(list);
     }
+
+    @RequestMapping("/updateOrderStatus")
+    public Result updateOrderStatus(StoreDto storeDto){
+        storeService.updateOrderStatus(storeDto);
+        return Result.success(true);
+    }
 }

@@ -12,6 +12,7 @@ import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Address;
 import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.utils.SessionUtil;
+import vip.ddm.ddm.vo.AddressVo;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -46,9 +47,13 @@ public class AddressService {
         addressMapper.updateByPrimaryKey(address);
     }
 
-    public PageInfo<Address> list(Address address,int page ,int rows){
+    public PageInfo<AddressVo> list(Address address,int page ,int rows){
+
+        if(address.getStoreId() == null && SessionUtil.getOnlineSession().getType() != 0){
+            address.setStoreId(SessionUtil.getOnlineSession().getId());
+        }
         PageHelper.startPage(page,rows);
-        List<Address> list = addressMapper.findList(address);
+        List<AddressVo> list = addressMapper.findList(address);
         return new PageInfo<>(list);
     }
 
