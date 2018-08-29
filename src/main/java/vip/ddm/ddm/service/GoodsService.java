@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vip.ddm.ddm.dao.GoodsMapper;
 import vip.ddm.ddm.dto.GoodsDto;
+import vip.ddm.ddm.dto.GoodsListDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Discount;
 import vip.ddm.ddm.model.Goods;
@@ -14,7 +15,9 @@ import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.utils.SessionUtil;
 import vip.ddm.ddm.vo.GoodsVo;
 
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -57,6 +60,9 @@ public class GoodsService {
     public PageInfo<GoodsVo> goodsList(Goods goods,int page ,int rows,Integer storeId){
         if(storeId == null && SessionUtil.getOnlineSession().getType() != 0){
             storeId = SessionUtil.getOnlineSession().getId();
+        }
+        if(goods.getDate() == null){
+            goods.setDate(new Date());
         }
         PageHelper.startPage(page,rows);
         List<GoodsVo> goodsVos = goodsMapper.findByParam(goods,storeId);
@@ -110,5 +116,27 @@ public class GoodsService {
     public List<Goods> findByGroupId(Integer groupId){
         return goodsMapper.findByGroupId(groupId);
 
+    }
+
+    public void saveBetch(GoodsListDto goodsListDto) {
+        Integer groupId = goodsListDto.getGroupId();
+        Date date = goodsListDto.getDate();
+        List<GoodsDto> goodsDtos = goodsListDto.getGoodsDtos();
+        for(GoodsDto goodsDto:goodsDtos){
+            Goods goods = new Goods();
+            goods.setDate(date);
+            goods.setStock(goodsDto.getStock());
+            goods.setPrice(goodsDto.getPrice());
+            goods.setStatus((byte)0);
+            goods.setBoxPrice(goodsDto.getBoxPrice());
+            goods.setDescr(goodsDto.getDescr());
+            goods.setGoodsName(goodsDto.getGoodsName());
+            goods.setGroupId(groupId);
+            String taste = (String)list2Str(goodsDto.getTaste());
+            goods.setTaste(taste);
+            String image = (String)list2Str(goodsDto.getImages());
+            goods.setImages(image);
+            goodsMapper.insert(goods);
+        }
     }
 }

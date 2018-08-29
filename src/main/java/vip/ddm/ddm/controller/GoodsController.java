@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import vip.ddm.ddm.dto.GoodsDto;
+import vip.ddm.ddm.dto.GoodsListDto;
 import vip.ddm.ddm.dto.GoodsQuesryDto;
 import vip.ddm.ddm.dto.IdQuery;
 import vip.ddm.ddm.model.Goods;
@@ -30,6 +31,12 @@ public class GoodsController {
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Result save(@RequestBody GoodsDto goodsDto){
         goodsService.save(goodsDto);
+        return Result.success(true);
+    }
+
+    @RequestMapping(value = "/saveBetch",method = RequestMethod.POST)
+    public Result saveBetch(@RequestBody GoodsListDto goodsListDto){
+        goodsService.saveBetch(goodsListDto);
         return Result.success(true);
     }
 
