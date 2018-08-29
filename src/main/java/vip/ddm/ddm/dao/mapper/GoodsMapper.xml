@@ -182,15 +182,19 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="findByParam" parameterType="vip.ddm.ddm.model.Goods" resultType="vip.ddm.ddm.vo.GoodsVo">
-    select g.*, p.group_name
-    from goods_group p, goods g
-    where p.id = g.group_id
+  <select id="findByParam" parameterType="map" resultType="vip.ddm.ddm.vo.GoodsVo">
+    select g.*, p.group_name, s.name as storeName
+    from goods_group p, goods g, store s
+    where p.id = g.group_id and p.store_id = s.id
     <if test="goodsName !=null and goodsName != '' ">
       and g.goods_name like CONCAT('%','${goodsName}','%')
     </if>
     <if test="groupId != null">
       and g.group_id = #{groupId}
+    </if>
+
+    <if test="storeId != null">
+      and s.id = #{storeId}
     </if>
 
     <if test="status == null">

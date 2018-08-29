@@ -14,4 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class GroupVo extends GoodsGroup {
     private String strDate;
+
+    private String storeName;
 }

@@ -40,5 +40,5 @@ public class OrderDto implements Serializable {
     @NotNull
     private List<OrderGoodsDto> orderGoodsDtos;
 
-
+    private Integer orderId;
 }

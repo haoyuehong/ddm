@@ -56,7 +56,7 @@ public interface GoodsMapper {
      */
     int updateByPrimaryKey(Goods record);
 
-    List<GoodsVo> findByParam(@Param(value = "goods") Goods goods);
+    List<GoodsVo> findByParam(@Param(value = "goods") Goods goods,@Param("storeId")Integer storeId);
 
     @Select("select * from goods where group_id = #{groupId} and status != 0")
     List<Goods> findByGroupId(@Param(value = "groupId") Integer groupId);

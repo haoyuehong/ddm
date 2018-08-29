@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 //import vip.ddm.ddm.config.WebSocketController;
+import vip.ddm.ddm.config.WebSocketController;
 import vip.ddm.ddm.dao.*;
 import vip.ddm.ddm.dto.OrderDto;
 import vip.ddm.ddm.dto.OrderGoodsDto;
@@ -15,6 +16,7 @@ import vip.ddm.ddm.dto.OrderQueryDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.*;
 import vip.ddm.ddm.result.CodeMsg;
+import vip.ddm.ddm.utils.SessionUtil;
 import vip.ddm.ddm.utils.SnowflakeIdWorker;
 import vip.ddm.ddm.vo.OrderDetailVO;
 import vip.ddm.ddm.vo.OrderGoodsVo;
@@ -31,8 +33,8 @@ public class OrderService {
     private OrderMapper orderMapper;
     @Autowired
     private OrderGoodsMapper orderGoodsMapper;
-    /*@Autowired
-    WebSocketController webSocketController;*/
+    @Autowired
+    WebSocketController webSocketController;
     @Autowired
     private GoodsMapper goodsMapper;
     @Autowired
@@ -43,6 +45,8 @@ public class OrderService {
     private FullDownMapper fullDownMapper;
     @Autowired
     private UserCouponService userCouponService;
+    @Autowired
+    private GoodsGroupMapper goodsGroupMapper;
 
 
     @Transactional
@@ -65,10 +69,14 @@ public class OrderService {
         }
         orderMapper.insert(order);
         //推送消息 TODO
-        //webSocketController.template.convertAndSendToUser("DDMVIP123123","/message","order"+id);
+        GoodsGroup goodsGroup = goodsGroupMapper.selectByPrimaryKey(goodsMapper.selectByPrimaryKey(orderGoodsDtoList.get(0).getGoods_id()).getGroupId());
+        webSocketController.template.convertAndSendToUser(goodsGroup.getStoreId()+"","/message","order"+id);
     }
 
-    public PageInfo<OrderVo> list(OrderQueryDto orderQueryDto){
+    public PageInfo<OrderVo> list(@Valid OrderQueryDto orderQueryDto){
+        if(orderQueryDto.getOrder().getStoreid() == null && SessionUtil.getOnlineSession().getType() != 0){
+            orderQueryDto.getOrder().setStoreid(SessionUtil.getOnlineSession().getId());
+        }
         PageHelper.startPage(orderQueryDto.getPage(),orderQueryDto.getRows());
         List<OrderVo> orderVos = orderMapper.list(orderQueryDto.getOrder(),orderQueryDto.getKey());
         return new PageInfo<>(orderVos);

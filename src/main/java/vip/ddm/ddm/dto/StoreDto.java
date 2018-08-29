@@ -32,14 +32,14 @@ public class StoreDto implements Serializable {
 
     private String phone;
 
-    private Byte status;
+    private Byte status = 0;
 
     @NotNull
     private Byte type;
 
-    private Byte amOrderStatus;
+    private Byte amOrderStatus = 0;
 
-    private Byte pmOrderStatus;
+    private Byte pmOrderStatus = 0;
 
 
 }

@@ -1,6 +1,7 @@
 package vip.ddm.ddm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vip.ddm.ddm.dto.BaseQuery;
@@ -19,26 +20,26 @@ public class StortController {
     private StoreService storeService;
 
     @RequestMapping("/save")
-    public Result svae(StoreDto storeDto){
+    public Result svae(@RequestBody StoreDto storeDto){
         storeService.save(storeDto);
         return Result.success(true);
     }
 
     @RequestMapping("/updateStatus")
-    public Result updateStatus(StoreDto storeDto){
+    public Result updateStatus(@RequestBody StoreDto storeDto){
         storeService.updateStatus(storeDto.getId(),storeDto.getStatus());
         return Result.success(true);
     }
 
 
     @RequestMapping("/list")
-    public Result list(BaseQuery baseQuery){
+    public Result list(@RequestBody BaseQuery baseQuery){
         List<Store> list = storeService.list(baseQuery);
         return Result.success(list);
     }
 
     @RequestMapping("/updateOrderStatus")
-    public Result updateOrderStatus(StoreDto storeDto){
+    public Result updateOrderStatus(@RequestBody StoreDto storeDto){
         storeService.updateOrderStatus(storeDto);
         return Result.success(true);
     }

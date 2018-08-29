@@ -25,4 +25,6 @@ public class GoodsGroupDto implements Serializable {
 
     private Byte status = 0;
 
+    private Integer storeId;
+
 }

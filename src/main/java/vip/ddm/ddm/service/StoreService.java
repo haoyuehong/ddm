@@ -10,6 +10,7 @@ import vip.ddm.ddm.dto.StoreDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Store;
 import vip.ddm.ddm.result.CodeMsg;
+import vip.ddm.ddm.utils.EncryptTool;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -26,8 +27,10 @@ public class StoreService {
         Store store = new Store();
         BeanUtils.copyProperties(storeDto,store);
         if(store.getId() != null){
-            storeMapper.updateByPrimaryKey(store);
+            storeMapper.updateByPrimaryKeySelective(store);
         }else {
+            String password = EncryptTool.encrypt(storeDto.getPassword());
+            store.setPassword(password);
             store.setDate(new Date());
             store.setStatus((byte) 0);
             storeMapper.insert(store);

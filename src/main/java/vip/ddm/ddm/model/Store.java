@@ -1,5 +1,8 @@
 package vip.ddm.ddm.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -47,6 +50,7 @@ public class Store implements Serializable {
      *
      * @mbg.generated
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date date;
 
     /**
@@ -56,6 +60,7 @@ public class Store implements Serializable {
      *
      * @mbg.generated
      */
+    @JsonIgnore
     private String password;
 
     /**

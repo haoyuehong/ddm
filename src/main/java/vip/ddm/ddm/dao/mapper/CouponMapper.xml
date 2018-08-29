@@ -173,6 +173,9 @@
     select c.*,s.name as storeName
     from coupon c,coupon_store cs, store s
     where c.id = cs.coupon_id and cs.store_id = s.id
+    <if test="storeId != null">
+      and s.id = #{storeId}
+    </if>
     <if test="status == null">
       and c.status = 0
     </if>

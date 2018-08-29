@@ -24,13 +24,17 @@ public class AddressService {
     private AddressMapper addressMapper;
 
     public void save(@Valid AddressDto addressDto){
+        Integer storeId = addressDto.getStoreId();
+        if(storeId == null){
+            storeId = SessionUtil.getOnlineSession().getId();
+        }
         Address address = new Address();
         BeanUtils.copyProperties(addressDto,address);
         if(address.getId() != null){
             addressMapper.updateByPrimaryKeySelective(address);
         }else{
+            address.setStoreId(storeId);
             address.setStatus((byte)0);
-            address.setStoreId(SessionUtil.getOnlineSession().getId());
             addressMapper.insert(address);
         }
     }

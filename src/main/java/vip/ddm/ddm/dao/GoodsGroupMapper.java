@@ -1,8 +1,8 @@
 package vip.ddm.ddm.dao;
 
-import org.apache.ibatis.annotations.Update;
 import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.GoodsGroup;
+import vip.ddm.ddm.vo.GroupVo;
 
 import java.util.List;
 
@@ -55,6 +55,6 @@ public interface GoodsGroupMapper {
      */
     int updateByPrimaryKey(GoodsGroup record);
 
+    List<GroupVo> selectByName(@Param("goodsGroup") GoodsGroup goodsGroup);
 
-    List<GoodsGroup> selectByName(@Param("goodsGroup") GoodsGroup goodsGroup);
 }

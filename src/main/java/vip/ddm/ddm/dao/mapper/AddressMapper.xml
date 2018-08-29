@@ -117,19 +117,20 @@
     from address a,store s
     where a.store_id = s.id
 
-    <if test="storeId != null">
-      and s.id = #{storeId}
+    <if test="address.storeId != null">
+      and s.id = #{address.storeId}
     </if>
-    <if test="status == null">
+
+    <if test="address.status == null">
       and a.status = 0
     </if>
 
-    <if test="status != null">
-      and a.status = #{status}
+    <if test="address.status != null">
+      and a.status = #{address.status}
     </if>
 
-    <if test="address != null">
-      AND a.address like CONCAT('%','${address}','%')
+    <if test="address.address != null">
+      AND a.address like CONCAT('%','${address.address}','%')
     </if>
 
   </select>

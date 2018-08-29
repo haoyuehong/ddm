@@ -46,7 +46,7 @@ public class LoginController {
         catch (Exception e){
             throw new GlobleException(CodeMsg.STORE_INFO_ERROR);
         }
-        return Result.success(true);
+        return Result.success(SessionUtil.getOnlineSession());
     }
 
     //登出

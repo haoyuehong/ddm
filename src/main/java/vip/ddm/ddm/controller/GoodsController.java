@@ -23,7 +23,7 @@ public class GoodsController {
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     public Result list(@RequestBody GoodsQuesryDto quesryDto){
-        PageInfo<GoodsVo> pageInfo = goodsService.goodsList(quesryDto.getGoods(), quesryDto.getPage(), quesryDto.getRows());
+        PageInfo<GoodsVo> pageInfo = goodsService.goodsList(quesryDto.getGoods(), quesryDto.getPage(), quesryDto.getRows(), quesryDto.getStoreId());
         return Result.success(pageInfo);
     }
 

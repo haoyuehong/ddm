@@ -91,11 +91,11 @@ public class CouponService {
     }
 
     public PageInfo<CouponVo> list(CouponQuesryDto couponQuesryDto) {
-        PageHelper.startPage(couponQuesryDto.getPage(),couponQuesryDto.getRows());
         Integer storeId = couponQuesryDto.getStoreId();
-        if(storeId == null){
-            storeId = SessionUtil.getOnlineSession().getId();
+        if(couponQuesryDto.getStoreId() == null && SessionUtil.getOnlineSession().getType() != 0){
+            couponQuesryDto.setStoreId(SessionUtil.getOnlineSession().getId());
         }
+        PageHelper.startPage(couponQuesryDto.getPage(),couponQuesryDto.getRows());
         List<CouponVo> coupons = couponMapper.list(couponQuesryDto.getCoupon(),storeId);
         return new PageInfo<>(coupons);
     }

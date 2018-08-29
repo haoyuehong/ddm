@@ -44,4 +44,6 @@ public class GoodsVo extends Goods {
      */
     private List<String> tasteStr; //口味
 
+    private String storeName;
+
 }

@@ -14,6 +14,7 @@ import vip.ddm.ddm.model.Coupon;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.CouponService;
 import vip.ddm.ddm.service.UserCouponService;
+import vip.ddm.ddm.vo.CouponVo;
 
 import javax.validation.Valid;
 
@@ -39,7 +40,7 @@ public class CouponController {
     }
 
     @RequestMapping("/list")
-    public Result<PageInfo<Coupon>> list(@RequestBody CouponQuesryDto couponQuesryDto){
+    public Result<PageInfo<CouponVo>> list(@RequestBody CouponQuesryDto couponQuesryDto){
         return Result.success(couponService.list(couponQuesryDto));
     }
 

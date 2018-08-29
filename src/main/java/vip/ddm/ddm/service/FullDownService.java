@@ -8,6 +8,7 @@ import vip.ddm.ddm.dto.FullDownDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.FullDown;
 import vip.ddm.ddm.result.CodeMsg;
+import vip.ddm.ddm.vo.FullDownVo;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -42,7 +43,7 @@ public class FullDownService {
         fullDownMapper.updateByPrimaryKey(fullDown);
     }
 
-    public List<FullDown> list(FullDown fullDown){
+    public List<FullDownVo> list(FullDown fullDown){
         return fullDownMapper.findList(fullDown);
     }
 }

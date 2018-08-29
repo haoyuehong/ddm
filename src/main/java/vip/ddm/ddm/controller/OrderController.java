@@ -1,6 +1,7 @@
 package vip.ddm.ddm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vip.ddm.ddm.dto.IdAndStatusDto;
@@ -26,19 +27,19 @@ public class OrderController {
     }
 
     @RequestMapping("/detail")
-    public Result detail(@Valid IdAndStatusDto idAndStatusDto){
+    public Result detail(@RequestBody IdAndStatusDto idAndStatusDto){
         return Result.success(orderService.detail(idAndStatusDto.getId()));
     }
 
 
     @RequestMapping("/update")
-    public Result updateStatus(@Valid IdAndStatusDto idAndStatusDto){
+    public Result updateStatus(@RequestBody IdAndStatusDto idAndStatusDto){
         orderService.updateStatus(idAndStatusDto.getId(),idAndStatusDto.getStatus());
         return Result.success(true);
     }
 
     @RequestMapping("/list")
-    public Result list(@Valid OrderQueryDto orderQueryDto){
+    public Result list(@RequestBody OrderQueryDto orderQueryDto){
         orderService.list(orderQueryDto);
         return Result.success(true);
     }

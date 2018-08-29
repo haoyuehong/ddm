@@ -12,4 +12,6 @@ import vip.ddm.ddm.model.Goods;
 @NoArgsConstructor
 public class GoodsQuesryDto extends BaseQuery {
     private Goods goods;
+
+    private Integer storeId;
 }

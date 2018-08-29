@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import vip.ddm.ddm.utils.SessionUtil;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -35,4 +36,6 @@ public class FullDownDto implements Serializable {
 
 
     private Byte status = 0;
+
+    private Integer storeId = SessionUtil.getOnlineSession().getId();
 }

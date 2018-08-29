@@ -11,6 +11,7 @@ import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Discount;
 import vip.ddm.ddm.model.Goods;
 import vip.ddm.ddm.result.CodeMsg;
+import vip.ddm.ddm.utils.SessionUtil;
 import vip.ddm.ddm.vo.GoodsVo;
 
 import java.util.Arrays;
@@ -53,9 +54,12 @@ public class GoodsService {
         goodsMapper.updateByPrimaryKeySelective(goods);
     }
 
-    public PageInfo<GoodsVo> goodsList(Goods goods,int page ,int rows){
+    public PageInfo<GoodsVo> goodsList(Goods goods,int page ,int rows,Integer storeId){
+        if(storeId == null && SessionUtil.getOnlineSession().getType() != 0){
+            storeId = SessionUtil.getOnlineSession().getId();
+        }
         PageHelper.startPage(page,rows);
-        List<GoodsVo> goodsVos = goodsMapper.findByParam(goods);
+        List<GoodsVo> goodsVos = goodsMapper.findByParam(goods,storeId);
         for(GoodsVo goodsVo:goodsVos){
             String images = goodsVo.getImages();
             String[] imageList = images.split(SPLITE_STR);

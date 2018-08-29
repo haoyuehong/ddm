@@ -4,18 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vip.ddm.ddm.model.Order;
+import vip.ddm.ddm.model.FullDown;
+import vip.ddm.ddm.model.GoodsGroup;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderVo extends Order {
-
-    private String address;
-
-    private String nickname;
+public class FullDownVo extends FullDown {
 
     private String storeName;
-
 }
