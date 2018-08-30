@@ -14,4 +14,6 @@ public class BaseQuery implements Serializable {
     private int rows;
 
     private String key;
+
+    private Integer parentId;
 }

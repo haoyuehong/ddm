@@ -17,4 +17,8 @@ public class IdQuery implements Serializable {
     private Integer couponId;
 
     private Integer userId;
+
+    private Integer parentId;
+
+    private Integer type;
 }

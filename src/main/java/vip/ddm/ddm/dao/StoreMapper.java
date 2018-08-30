@@ -55,9 +55,11 @@ public interface StoreMapper {
      */
     int updateByPrimaryKey(Store record);
 
-    @Select("select * from store where name like CONCAT('%','${key}','%') or username like CONCAT('%','${key}','%') or address like CONCAT('%','${key}','%')")
-    List<Store> list(@Param("key") String key);
+    @Select("select * from store")
+    List<Store> list();
 
     @Select("select * from store where username = #{name}")
     List<Store> findByName(@Param("name") String name);
+
+    List<Store> findByParent(@Param("parentId") Integer parentId,@Param("type")Integer type);
 }

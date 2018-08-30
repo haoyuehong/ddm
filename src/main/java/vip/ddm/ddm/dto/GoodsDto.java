@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -38,5 +39,5 @@ public class GoodsDto {
 
     private String descr;//商品描述
 
-
+    private Date date; //商品售卖时间
 }

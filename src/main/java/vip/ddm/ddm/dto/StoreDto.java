@@ -41,5 +41,12 @@ public class StoreDto implements Serializable {
 
     private Byte pmOrderStatus = 0;
 
+    @NotNull
+    private String amDeliveryTime;
+    @NotNull
+    private String pmDeliveryTime;
+
+    private Integer parentId;
+
 
 }

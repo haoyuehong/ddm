@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vip.ddm.ddm.dao.CouponGoodsGroupMapper;
@@ -19,6 +20,7 @@ import vip.ddm.ddm.utils.SessionUtil;
 import vip.ddm.ddm.vo.CouponVo;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,10 +37,12 @@ public class CouponService {
     private CouponGoodsGroupMapper couponGoodsGroupMapper;
     @Autowired
     private CouponGoodsMapper couponGoodsMapper;
+    @Autowired
+    private StoreService storeService;
 
 
     public void save(@Valid CouponDto couponDto){
-        if(couponDto.getStoreId().size() == 0){
+        if(couponDto.getStoreId() == null || couponDto.getStoreId().size() == 0){
             saveCoupon(couponDto,SessionUtil.getOnlineSession().getId());
         }else{
             for(Integer storeId : couponDto.getStoreId()){
@@ -91,9 +95,17 @@ public class CouponService {
     }
 
     public PageInfo<CouponVo> list(CouponQuesryDto couponQuesryDto) {
+        List<Integer> storeIds = new ArrayList<>();
         Integer storeId = couponQuesryDto.getStoreId();
-        if(couponQuesryDto.getStoreId() == null && SessionUtil.getOnlineSession().getType() != 0){
-            couponQuesryDto.setStoreId(SessionUtil.getOnlineSession().getId());
+        if(couponQuesryDto.getStoreId() == null){
+            if(SessionUtil.getOnlineSession().getType() == 0){
+                List<Store> storeList = storeService.finbyparent(SessionUtil.getOnlineSession().getId(), 1);
+                for(Store store : storeList){
+                    storeIds.add(store.getId());
+                }
+            }else{
+
+            }
         }
         PageHelper.startPage(couponQuesryDto.getPage(),couponQuesryDto.getRows());
         List<CouponVo> coupons = couponMapper.list(couponQuesryDto.getCoupon(),storeId);

@@ -7,7 +7,7 @@
     <!-- 引入配置文件 -->
     <!--<properties resource="application.properties" />-->
     <!-- 指定数据连接驱动jar地址 -->
-    <classPathEntry location="D:/development/apache-maven-3.5.4/repo/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar" />
+    <classPathEntry location="D:/devement/maven/apache-maven-3.5.4/repo/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar" />
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!-- JavaBean 实现 序列化 接口 -->
@@ -76,8 +76,8 @@
         <!--<table tableName="address" domainObjectName="Address" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
-        <table tableName="goods" domainObjectName="Goods" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <!--<table tableName="goods" domainObjectName="Goods" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
         <!--<table tableName="discount" domainObjectName="Discount" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
@@ -92,8 +92,8 @@
 
         <!--<table tableName="coupon_goods" domainObjectName="CouponGoods" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
               enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-        <!--<table tableName="coupon" domainObjectName="Coupon" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <table tableName="coupon" domainObjectName="Coupon" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
        <!-- <table tableName="order" domainObjectName="Order" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>-->

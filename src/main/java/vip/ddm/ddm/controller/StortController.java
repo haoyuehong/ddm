@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vip.ddm.ddm.dto.BaseQuery;
+import vip.ddm.ddm.dto.IdQuery;
 import vip.ddm.ddm.dto.StoreDto;
 import vip.ddm.ddm.model.Store;
 import vip.ddm.ddm.result.Result;
@@ -33,8 +34,8 @@ public class StortController {
 
 
     @RequestMapping("/list")
-    public Result list(@RequestBody BaseQuery baseQuery){
-        List<Store> list = storeService.list(baseQuery);
+    public Result list(){
+        List<Store> list = storeService.list();
         return Result.success(list);
     }
 
@@ -42,5 +43,10 @@ public class StortController {
     public Result updateOrderStatus(@RequestBody StoreDto storeDto){
         storeService.updateOrderStatus(storeDto);
         return Result.success(true);
+    }
+
+    @RequestMapping("/finbyparent")
+    public Result findbyparent(@RequestBody IdQuery idQuery){
+       return Result.success(storeService.finbyparent(idQuery.getParentId(),idQuery.getType()));
     }
 }

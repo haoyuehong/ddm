@@ -11,6 +11,7 @@ import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Store;
 import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.utils.EncryptTool;
+import vip.ddm.ddm.utils.SessionUtil;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -47,12 +48,18 @@ public class StoreService {
         }
         store.setStatus(status);
         storeMapper.updateByPrimaryKey(store);
-
     }
 
-    public List<Store> list(BaseQuery baseQuery){
-        PageHelper.startPage(baseQuery.getPage(),baseQuery.getRows());
-        List<Store> stores = storeMapper.list(baseQuery.getKey());
+    public List<Store> list(){
+        List<Store> stores;
+        //查询当前登陆店铺的所有子店铺
+        if(SessionUtil.getOnlineSession().getId() == 1){
+            stores = storeMapper.list();
+        }else{
+            Integer parentId = SessionUtil.getOnlineSession().getId();
+            stores = storeMapper.findByParent(parentId,null);
+            stores.add(SessionUtil.getOnlineSession());
+        }
         return stores;
     }
 
@@ -72,5 +79,10 @@ public class StoreService {
             store.setAmOrderStatus(storeDto.getPmOrderStatus());
         }
         storeMapper.updateByPrimaryKeySelective(store);
+    }
+
+    public List<Store> finbyparent(Integer id,Integer type) {
+
+        return storeMapper.findByParent(id,type);
     }
 }

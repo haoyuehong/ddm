@@ -31,8 +31,8 @@ public class CouponDto implements Serializable {
     @NotNull(message = "最低价格不能为空")
     private Double lowestPrice = 0.0;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date date;
 
     private Byte superposition = 0; //是否可与其他优惠叠加使用 0可以  1不可以
@@ -49,4 +49,7 @@ public class CouponDto implements Serializable {
     private List<Integer> goodsIds;
 
     private List<Integer> goodsGroupIds;
+
+    @NotNull
+    private Integer num;
 }
