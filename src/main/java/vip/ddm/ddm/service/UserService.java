@@ -12,7 +12,7 @@ import vip.ddm.ddm.dto.UserDto;
 import vip.ddm.ddm.dto.UserTypeDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Coupon;
-import vip.ddm.ddm.model.Order;
+import vip.ddm.ddm.model.Orders;
 import vip.ddm.ddm.model.User;
 import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.utils.WxGetUserInfo;
@@ -115,7 +115,7 @@ public class UserService {
             BeanUtils.copyProperties(userVo,user);
             List<Coupon> coupons = userCouponService.selectByUserId(user.getId());
             userVo.setCouponNum(coupons.size());
-            List<Order> orders = orderService.findByUserId(user.getId());
+            List<Orders> orders = orderService.findByUserId(user.getId());
             userVo.setOrderNum(orders.size());
             userVoList.add(userVo);
         }

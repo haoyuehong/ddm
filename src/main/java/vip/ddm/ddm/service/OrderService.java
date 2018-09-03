@@ -36,7 +36,7 @@ import java.util.List;
 public class OrderService {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private OrdersMapper orderMapper;
     @Autowired
     private OrderGoodsMapper orderGoodsMapper;
     @Autowired
@@ -85,11 +85,14 @@ public class OrderService {
     public void save(@Valid OrderDtos orderDtos){
         List<OrderDto> orderDtoList = orderDtos.getOrderDtoList();
         Integer storeid = orderDtos.getStoreid();
+        Integer userId = orderDtos.getUserId();
         int orderNum = 0;
         for(OrderDto orderDto : orderDtoList){
-            Order order = new Order();
+            Orders order = new Orders();
             BeanUtils.copyProperties(orderDto,order);
             order.setStoreid(storeid);
+            order.setUserId(userId);
+            order.setDate(new Date());
             SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
             String id = "DDM_VIP"+idWorker.nextId();
             order.setId(id);
@@ -102,9 +105,9 @@ public class OrderService {
                 orderGoodsMapper.insert(orderGoods);
             }
             if(orderDto.getCouponId() != null){
-                userCouponService.updateStatus(orderDto.getCouponId(),orderDto.getUserId(),(byte)3);
+                userCouponService.updateStatus(orderDto.getCouponId(),userId,(byte)3);
             }
-            orderMapper.insert(order);
+            orderMapper.insertSelective(order);
             //推送消息 TODO
             orderNum ++;
         }
@@ -132,7 +135,7 @@ public class OrderService {
         if(StringUtils.isBlank(id)){
             throw new GlobleException(CodeMsg.ORDER_ID_NULL);
         }
-        Order order = orderMapper.selectByPrimaryKey(id);
+        Orders order = orderMapper.selectByPrimaryKey(id);
         if(order == null){
             throw new GlobleException(CodeMsg.ORDER_NULL);
         }
@@ -161,7 +164,7 @@ public class OrderService {
             orderGoodsVo.setRealPrice(realPrice);
             orderGoodsVos.add(orderGoodsVo);
         }
-        Order order = orderMapper.selectByPrimaryKey(id);
+        Orders order = orderMapper.selectByPrimaryKey(id);
         orderDetailVO.setOrderGoodsVoList(orderGoodsVos);
         if(order.getCouponId() != null){
             Coupon coupon = couponMapper.findByIdAndStatus(order.getCouponId(),0);
@@ -180,7 +183,7 @@ public class OrderService {
         return orderDetailVO;
     }
 
-    public List<Order> findByUserId(Integer userId){
+    public List<Orders> findByUserId(Integer userId){
         return orderMapper.selectByUserId(userId);
     }
 

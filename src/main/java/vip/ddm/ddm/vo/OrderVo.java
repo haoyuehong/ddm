@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vip.ddm.ddm.model.Order;
+import vip.ddm.ddm.model.Orders;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderVo extends Order {
+public class OrderVo extends Orders {
 
     private String address;
 

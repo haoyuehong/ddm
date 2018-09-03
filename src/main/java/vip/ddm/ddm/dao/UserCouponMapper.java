@@ -1,7 +1,7 @@
 package vip.ddm.ddm.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Coupon;
 import vip.ddm.ddm.model.User;
 import vip.ddm.ddm.model.UserCoupon;
@@ -58,8 +58,7 @@ public interface UserCouponMapper {
     int updateByPrimaryKey(UserCoupon record);
 
 
-    @Select("select * from user_coupon where coupon_id = #{couponId} and user_id = #{userId}")
-    UserCoupon selectByUserIdAndCouponId(@Param("couponId") Integer couponId, @Param("userId")Integer userId);
+    //UserCoupon selectByUserIdAndCouponId(@Param("couponId") Integer couponId, @Param("userId")Integer userId);
 
     @Select("select c.* from user_coupon up, coupon c where up.coupon_id = c.id and up.user_id = #{userId} order by status ASC")
     List<Coupon> selectByUserId(@Param("userId")Integer userId);
@@ -67,4 +66,6 @@ public interface UserCouponMapper {
 
     @Select("select u.* from user_coupon up, user u where up.coupon_id = u.id and up.coupon_id = #{couponId}")
     List<User> selectByCouponId(@Param("couponId")Integer couponId);
+
+    UserCoupon selectByUserIdAndCouponId(@Param("couponId") Integer couponId, @Param("userId") Integer userId);
 }

@@ -18,4 +18,8 @@ public class OrderDtos implements Serializable {
 
     @NotNull
     private Integer storeid;
+
+    @NotNull
+    private Integer userId;
+
 }

@@ -1,9 +1,11 @@
 package vip.ddm.ddm.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -35,6 +37,8 @@ public class OrderDto implements Serializable {
     private String phone; //电话
 
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date deliveryTime; //送达时间
 
     @NotNull

@@ -1,6 +1,6 @@
 package vip.ddm.ddm.dao;
 
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
 import vip.ddm.ddm.model.GoodsGroup;
 import vip.ddm.ddm.vo.GroupVo;
 

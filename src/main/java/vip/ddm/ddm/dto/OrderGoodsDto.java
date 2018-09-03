@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class OrderGoodsDto {
 
-    private Integer Goods_id;
+    private Integer goods_id;
 
     private Integer num;
 }

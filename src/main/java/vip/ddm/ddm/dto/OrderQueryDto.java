@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vip.ddm.ddm.model.Order;
+import vip.ddm.ddm.model.Orders;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ import java.util.Date;
 @Setter
 public class OrderQueryDto extends BaseQuery {
 
-    private Order order;
+    private Orders order;
 
     private Integer storid;
 
