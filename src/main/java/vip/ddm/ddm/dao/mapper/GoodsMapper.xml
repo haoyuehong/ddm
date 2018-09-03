@@ -229,26 +229,32 @@
     select g.*, p.group_name, s.name as storeName
     from goods_group p, goods g, store s
     where p.id = g.group_id and p.store_id = s.id
-    <if test="date != null">
-      and g.date = #{date}
+    <if test="storeIds != null and storeIds.size()>0">
+      and s.id IN
+      <foreach collection="storeIds" open="(" separator="," close=")" item="item">
+        #{item}
+      </foreach>
     </if>
-    <if test="goodsName !=null and goodsName != '' ">
-      and g.goods_name like CONCAT('%','${goodsName}','%')
-    </if>
-    <if test="groupId != null">
-      and g.group_id = #{groupId}
-    </if>
+    <if test="goods != null">
+      <if test="goods.date != null">
+        and g.date = #{goods.date}
+      </if>
 
-    <if test="storeId != null">
-      and s.id = #{storeId}
-    </if>
+      <if test="goods.goodsName !=null and goods.goodsName != '' ">
+        and g.goods_name like CONCAT('%','${goods.goodsName}','%')
+      </if>
 
-    <if test="status == null">
-      and g.status = 0
-    </if>
+      <if test="goods.groupId != null">
+        and g.group_id = #{goods.groupId}
+      </if>
 
-    <if test="status != null">
-      and g.status = #{status}
+      <if test="goods.status == null">
+        and g.status = 0
+      </if>
+
+      <if test="goods.status != null">
+        and g.status = #{goods.status}
+      </if>
     </if>
     ORDER BY g.date DESC
   </select>

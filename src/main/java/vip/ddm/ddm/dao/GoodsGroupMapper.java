@@ -55,6 +55,6 @@ public interface GoodsGroupMapper {
      */
     int updateByPrimaryKey(GoodsGroup record);
 
-    List<GroupVo> selectByName(@Param("goodsGroup") GoodsGroup goodsGroup);
+    List<GroupVo> selectByName(@Param("goodsGroup") GoodsGroup goodsGroup,@Param("storeIds")List<Integer> storeIds);
 
 }

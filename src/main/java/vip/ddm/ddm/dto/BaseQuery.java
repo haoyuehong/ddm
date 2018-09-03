@@ -9,9 +9,9 @@ import java.io.Serializable;
 @Setter
 public class BaseQuery implements Serializable {
 
-    private int page;
+    private int page = 0;
 
-    private int rows;
+    private int rows = 10;
 
     private String key;
 

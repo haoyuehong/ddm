@@ -193,24 +193,26 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="list" resultType="vip.ddm.ddm.vo.CouponVo">
+  <select id="list" parameterType="map" resultType="vip.ddm.ddm.vo.CouponVo">
     select c.*,s.name as storeName
     from coupon c,coupon_store cs, store s
     where c.id = cs.coupon_id and cs.store_id = s.id
-    <if test="storeId != null">
-      and s.id = #{storeId}
+    <if test="storeIds != null and storeIds.size()>0">
+      and s.id in
+      <foreach collection="storeIds" item="item" close=")" open="(" separator=",">
+        #{item}
+      </foreach>
     </if>
-    <if test="status == null">
-      and c.status = 0
-    </if>
-    <if test="status != null">
-      and c.status = #{status}
-    </if>
-    <if test="name != null and name != ''">
-      and c.name like CONCAT('%','${name}','%')
-    </if>
-    <if test="price != null">
-      and c.price = #{price}
+    <if test="coupon != null">
+      <if test="coupon.status == null">
+        and c.status = 0
+      </if>
+      <if test="coupon.status != null">
+        and c.status = #{coupon.status}
+      </if>
+      <if test="coupon.name != null and coupon.name != ''">
+        and c.name like CONCAT('%','${coupon.name}','%')
+      </if>
     </if>
   </select>
 </mapper>

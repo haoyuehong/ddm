@@ -235,4 +235,29 @@
     </if>
     order by o.date DESC,o.status ASC
   </select>
+
+  <select id="findList" parameterType="map" resultType="vip.ddm.ddm.vo.OrderVo">
+    select o.*,u.*,a.*,s.name as storeName
+    from order o,user u,address a,store s
+    where o.user_id = u.id and o.address_id = a.id and o.storeid = s.id
+    <if test="key != null and key != ''">
+      and o.id like CONCAT('%','${key}','%') or u.nickname like CONCAT('%','${key}','%') or a.address like CONCAT('%','${key}','%')
+    </if>
+
+    <if test="storeIds != null and storeIds.size() > 0">
+      and s.id in
+      <foreach collection="storeIds" open="(" close=")" item="item" separator=",">
+        #{item}
+      </foreach>
+    </if>
+
+    <if test="status != null">
+      and o.status = #{status}
+    </if>
+
+    <if test="status != null">
+      and o.status = #{status}
+    </if>
+    order by o.date ASC,o.status ASC
+  </select>
 </mapper>

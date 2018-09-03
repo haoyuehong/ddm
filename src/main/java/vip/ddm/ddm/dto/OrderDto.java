@@ -41,4 +41,7 @@ public class OrderDto implements Serializable {
     private List<OrderGoodsDto> orderGoodsDtos;
 
     private Integer orderId;
+
+    @NotNull
+    private Integer storeid;
 }

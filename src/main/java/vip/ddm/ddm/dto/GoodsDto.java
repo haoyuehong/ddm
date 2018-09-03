@@ -40,4 +40,6 @@ public class GoodsDto {
     private String descr;//商品描述
 
     private Date date; //商品售卖时间
+
+    private Integer storeId;
 }

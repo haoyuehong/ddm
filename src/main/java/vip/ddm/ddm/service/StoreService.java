@@ -53,7 +53,7 @@ public class StoreService {
     public List<Store> list(){
         List<Store> stores;
         //查询当前登陆店铺的所有子店铺
-        if(SessionUtil.getOnlineSession().getId() == 1){
+        if(SessionUtil.getOnlineSession().getType() == -1){
             stores = storeMapper.list();
         }else{
             Integer parentId = SessionUtil.getOnlineSession().getId();

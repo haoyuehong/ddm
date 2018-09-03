@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Select;
 import vip.ddm.ddm.model.Order;
 import vip.ddm.ddm.vo.OrderVo;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OrderMapper {
@@ -60,4 +61,6 @@ public interface OrderMapper {
 
     @Select("select * from order where user_id = #{userId} and status <= 3")
     List<Order> selectByUserId(@Param("userId") Integer userId);
+
+    List<OrderVo> findList(@Param("order") Order order, @Param("key")String key, @Param("storeIds")List<Integer> storeIds, @Param("today")Date today, @Param("tomrrow")Date tomrrow);
 }

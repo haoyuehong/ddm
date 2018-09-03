@@ -56,7 +56,7 @@ public interface CouponMapper {
      */
     int updateByPrimaryKey(Coupon record);
 
-    List<CouponVo> list(@Param("coupon") Coupon coupon, @Param("storeId")Integer storeId);
+    List<CouponVo> list(@Param("coupon") Coupon coupon, @Param("storeIds")List<Integer> storeIds);
 
     @Select("select * from coupon where id = #{couponId} and status = #{status}")
     Coupon findByIdAndStatus(@Param("couponId") Integer couponId, @Param("status") Integer status);

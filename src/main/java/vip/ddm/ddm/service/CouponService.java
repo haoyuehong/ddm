@@ -41,6 +41,7 @@ public class CouponService {
     private StoreService storeService;
 
 
+    @Transactional
     public void save(@Valid CouponDto couponDto){
         if(couponDto.getStoreId() == null || couponDto.getStoreId().size() == 0){
             saveCoupon(couponDto,SessionUtil.getOnlineSession().getId());
@@ -95,23 +96,37 @@ public class CouponService {
     }
 
     public PageInfo<CouponVo> list(CouponQuesryDto couponQuesryDto) {
-        List<Integer> storeIds = new ArrayList<>();
         Integer storeId = couponQuesryDto.getStoreId();
-        if(couponQuesryDto.getStoreId() == null){
+        List<Integer> storeIds = getStoreIds(storeId);
+        PageHelper.startPage(couponQuesryDto.getPage(),couponQuesryDto.getRows());
+        List<CouponVo> coupons = couponMapper.list(couponQuesryDto.getCoupon(),storeIds);
+        return new PageInfo<>(coupons);
+    }
+
+    public List<Integer> getStoreIds(Integer storeId){
+        List<Integer> storeIds = new ArrayList<>();
+        if(storeId == null){
             if(SessionUtil.getOnlineSession().getType() == 0){
-                List<Store> storeList = storeService.finbyparent(SessionUtil.getOnlineSession().getId(), 1);
+                /*List<Store> storeList = storeService.finbyparent(SessionUtil.getOnlineSession().getId(), 1);
                 for(Store store : storeList){
                     storeIds.add(store.getId());
+
+                }*/
+                storeIds.add(SessionUtil.getOnlineSession().getId());
+            }else if(SessionUtil.getOnlineSession().getType() == -1){
+                List<Store> list = storeService.list();
+                for(Store store : list){
+                    storeIds.add(store.getId());
+                    storeIds.add(SessionUtil.getOnlineSession().getId());
                 }
             }else{
-
-
-
+                storeId = SessionUtil.getOnlineSession().getId();
+                storeIds.add(storeId);
             }
+        }else {
+            storeIds.add(storeId);
         }
-        PageHelper.startPage(couponQuesryDto.getPage(),couponQuesryDto.getRows());
-        List<CouponVo> coupons = couponMapper.list(couponQuesryDto.getCoupon(),storeId);
-        return new PageInfo<>(coupons);
+        return storeIds;
     }
 
 }

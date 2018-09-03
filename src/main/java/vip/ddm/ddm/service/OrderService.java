@@ -11,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import vip.ddm.ddm.config.WebSocketController;
 import vip.ddm.ddm.dao.*;
 import vip.ddm.ddm.dto.OrderDto;
+import vip.ddm.ddm.dto.OrderDtos;
 import vip.ddm.ddm.dto.OrderGoodsDto;
 import vip.ddm.ddm.dto.OrderQueryDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.*;
 import vip.ddm.ddm.result.CodeMsg;
+import vip.ddm.ddm.utils.DateTools;
 import vip.ddm.ddm.utils.SessionUtil;
 import vip.ddm.ddm.utils.SnowflakeIdWorker;
 import vip.ddm.ddm.vo.OrderDetailVO;
@@ -23,7 +25,11 @@ import vip.ddm.ddm.vo.OrderGoodsVo;
 import vip.ddm.ddm.vo.OrderVo;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,9 +53,11 @@ public class OrderService {
     private UserCouponService userCouponService;
     @Autowired
     private GoodsGroupMapper goodsGroupMapper;
+    @Autowired
+    private CouponService couponService;
 
 
-    @Transactional
+    /*@Transactional
     public void save(@Valid OrderDto orderDto){
         Order order = new Order();
         BeanUtils.copyProperties(orderDto,order);
@@ -71,14 +79,49 @@ public class OrderService {
         //推送消息 TODO
         GoodsGroup goodsGroup = goodsGroupMapper.selectByPrimaryKey(goodsMapper.selectByPrimaryKey(orderGoodsDtoList.get(0).getGoods_id()).getGroupId());
         webSocketController.template.convertAndSendToUser(goodsGroup.getStoreId()+"","/message","order"+id);
+    }*/
+
+    @Transactional
+    public void save(@Valid OrderDtos orderDtos){
+        List<OrderDto> orderDtoList = orderDtos.getOrderDtoList();
+        Integer storeid = orderDtos.getStoreid();
+        int orderNum = 0;
+        for(OrderDto orderDto : orderDtoList){
+            Order order = new Order();
+            BeanUtils.copyProperties(orderDto,order);
+            order.setStoreid(storeid);
+            SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+            String id = "DDM_VIP"+idWorker.nextId();
+            order.setId(id);
+            List<OrderGoodsDto> orderGoodsDtoList = orderDto.getOrderGoodsDtos();
+            for(OrderGoodsDto orderGoodsDto:orderGoodsDtoList){
+                OrderGoods orderGoods = new OrderGoods();
+                orderGoods.setGoodsId(orderGoodsDto.getGoods_id());
+                orderGoods.setOrderId(id);
+                orderGoods.setNum(orderGoodsDto.getNum());
+                orderGoodsMapper.insert(orderGoods);
+            }
+            if(orderDto.getCouponId() != null){
+                userCouponService.updateStatus(orderDto.getCouponId(),orderDto.getUserId(),(byte)3);
+            }
+            orderMapper.insert(order);
+            //推送消息 TODO
+            orderNum ++;
+        }
+        webSocketController.template.convertAndSendToUser(orderDtos.getStoreid()+"","/message","order"+orderNum);
     }
 
-    public PageInfo<OrderVo> list(@Valid OrderQueryDto orderQueryDto){
-        if(orderQueryDto.getOrder().getStoreid() == null && SessionUtil.getOnlineSession().getType() != 0){
+    public PageInfo<OrderVo> list(@Valid OrderQueryDto orderQueryDto) throws ParseException {
+        List<Integer> storeIds = couponService.getStoreIds(orderQueryDto.getStorid());
+        /*if(orderQueryDto.getOrder().getStoreid() == null && SessionUtil.getOnlineSession().getType() != 0){
             orderQueryDto.getOrder().setStoreid(SessionUtil.getOnlineSession().getId());
-        }
+        }*/
+        Date tomrrow = DateTools.tomrrow();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        String formatDate = sf.format(new Date());
+        Date today = sf.parse(formatDate);
         PageHelper.startPage(orderQueryDto.getPage(),orderQueryDto.getRows());
-        List<OrderVo> orderVos = orderMapper.list(orderQueryDto.getOrder(),orderQueryDto.getKey());
+        List<OrderVo> orderVos = orderMapper.findList(orderQueryDto.getOrder(),orderQueryDto.getKey(),storeIds,today,tomrrow);
         return new PageInfo<>(orderVos);
     }
 

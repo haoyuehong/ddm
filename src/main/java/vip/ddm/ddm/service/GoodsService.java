@@ -29,6 +29,8 @@ public class GoodsService {
     private GoodsMapper goodsMapper;
     @Autowired
     private DisCountService disCountService;
+    @Autowired
+    private CouponService couponService;
 
     public void save(GoodsDto goodsDto){
         Goods goods = new Goods();
@@ -58,14 +60,15 @@ public class GoodsService {
     }
 
     public PageInfo<GoodsVo> goodsList(Goods goods,int page ,int rows,Integer storeId){
-        if(storeId == null && SessionUtil.getOnlineSession().getType() != 0){
+        /*if(storeId == null && SessionUtil.getOnlineSession().getType() != 0){
             storeId = SessionUtil.getOnlineSession().getId();
-        }
+        }*/
+        List<Integer> storeIds = couponService.getStoreIds(storeId);
         if(goods.getDate() == null){
             goods.setDate(new Date());
         }
         PageHelper.startPage(page,rows);
-        List<GoodsVo> goodsVos = goodsMapper.findByParam(goods,storeId);
+        List<GoodsVo> goodsVos = goodsMapper.findByParam(goods,storeIds);
         for(GoodsVo goodsVo:goodsVos){
             String images = goodsVo.getImages();
             String[] imageList = images.split(SPLITE_STR);

@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import vip.ddm.ddm.dao.FullDownMapper;
 import vip.ddm.ddm.dto.FullDownDto;
 import vip.ddm.ddm.exception.GlobleException;
+import vip.ddm.ddm.model.CouponStore;
 import vip.ddm.ddm.model.FullDown;
 import vip.ddm.ddm.result.CodeMsg;
+import vip.ddm.ddm.utils.SessionUtil;
 import vip.ddm.ddm.vo.FullDownVo;
 
 import javax.validation.Valid;
@@ -18,16 +20,28 @@ public class FullDownService {
 
     @Autowired
     private FullDownMapper fullDownMapper;
+    @Autowired
+    private CouponService couponService;
 
 
     public void save(@Valid FullDownDto fullDownDto){
-        FullDown fullDown = new FullDown();
-        BeanUtils.copyProperties(fullDownDto,fullDown);
-        if(fullDown.getId() != null){
-            fullDownMapper.updateByPrimaryKey(fullDown);
+        if(fullDownDto.getStoreIds() == null || fullDownDto.getStoreIds().size() == 0){
+            FullDown fullDown = new FullDown();
+            BeanUtils.copyProperties(fullDownDto,fullDown);
+            fullDown.setStoreId(SessionUtil.getOnlineSession().getId());
+            saveBetch(fullDown);
         }else{
-            fullDownMapper.insert(fullDown);
+            for(Integer storeId : fullDownDto.getStoreIds()){
+                FullDown fullDown = new FullDown();
+                BeanUtils.copyProperties(fullDownDto,fullDown);
+                fullDown.setStoreId(storeId);
+                saveBetch(fullDown);
+            }
         }
+    }
+
+    public void saveBetch(FullDown fullDown){
+        fullDownMapper.insert(fullDown);
     }
 
 
@@ -44,6 +58,7 @@ public class FullDownService {
     }
 
     public List<FullDownVo> list(FullDown fullDown){
-        return fullDownMapper.findList(fullDown);
+        List<Integer> storeIds = couponService.getStoreIds(fullDown.getStoreId());
+        return fullDownMapper.findList(fullDown,storeIds);
     }
 }

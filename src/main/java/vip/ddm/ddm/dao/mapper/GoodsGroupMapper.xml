@@ -123,24 +123,28 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByName" resultType="vip.ddm.ddm.vo.GroupVo">
+  <select id="selectByName" parameterType="map" resultType="vip.ddm.ddm.vo.GroupVo">
     select g.*,s.name as storeName
     from goods_group g,store s
     where g.store_id = s.id
-    <if test="groupName != null and groupName != ''">
-      and g.group_name like CONCAT(CONCAT('%',#{groupName},'%'))
+    <if test="storeIds != null and storeIds.size()>0">
+      and s.id in
+      <foreach collection="storeIds" open="(" separator="," close=")" item="item">
+        #{item}
+      </foreach>
     </if>
+    <if test="goodsGroup != null">
+      <if test="goodsGroup.groupName != null and goodsGroup.groupName != ''">
+        and g.group_name like CONCAT(CONCAT('%',#{goodsGroup.groupName},'%'))
+      </if>
 
-    <if test="storeId != null">
-      and s.id = #{storeId}
-    </if>
+      <if test="goodsGroup.status == null">
+        and g.status = 0
+      </if>
 
-    <if test="status == null">
-      and g.status = 0
-    </if>
-
-    <if test="status != null">
-      and g.status = #{status}
+      <if test="goodsGroup.status != null">
+        and g.status = #{goodsGroup.status}
+      </if>
     </if>
   </select>
 </mapper>

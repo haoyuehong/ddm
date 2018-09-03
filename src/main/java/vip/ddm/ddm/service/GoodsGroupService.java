@@ -25,6 +25,8 @@ public class GoodsGroupService {
     private GoodsGroupMapper goodsGroupMapper;
     @Autowired
     private GoodsService goodsService;
+    @Autowired
+    private CouponService couponService;
 
     public void save(@Valid GoodsGroupDto goodsGroupDto){
         Integer storeId = goodsGroupDto.getStoreId();
@@ -60,13 +62,10 @@ public class GoodsGroupService {
 
     public List<GroupVo> findAll(GoodsGroup goodsGroup){
         Integer storeId = goodsGroup.getStoreId();
-        if(storeId == null & SessionUtil.getOnlineSession().getType() != 0){
-            storeId = SessionUtil.getOnlineSession().getId();
-            goodsGroup.setStoreId(storeId);
-        }
+        List<Integer> storeIds = couponService.getStoreIds(storeId);
 
         List<GroupVo> groupVos = new ArrayList<>();
-        List<GroupVo> goodsGroups = goodsGroupMapper.selectByName(goodsGroup);
+        List<GroupVo> goodsGroups = goodsGroupMapper.selectByName(goodsGroup,storeIds);
         for(GoodsGroup gp : goodsGroups){
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String strDate = format.format(gp.getDate());

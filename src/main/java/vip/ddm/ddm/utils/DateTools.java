@@ -49,4 +49,13 @@ public class DateTools {
         }
         return dates;
     }
+
+    public static Date tomrrow(){
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calen = Calendar.getInstance();
+        calen.setTime(new Date());
+        calen.add(Calendar.DATE, 1);
+        Date date = calen.getTime();
+        return date;
+    }
 }

@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,12 +31,21 @@ public class FullDownDto implements Serializable {
     private Double lowestPrice;
 
     @NotNull
+    private Double price;
+
+    @NotNull
     private Byte superposition;
 
+    private Double hightestPrice;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date date;
 
 
     private Byte status = 0;
 
-    private Integer storeId = SessionUtil.getOnlineSession().getId();
+    private Integer storeId;
+
+    private List<Integer> storeIds;
 }
