@@ -82,7 +82,6 @@ public class StoreService {
     }
 
     public List<Store> finbyparent(Integer id,Integer type) {
-
         return storeMapper.findByParent(id,type);
     }
 }
