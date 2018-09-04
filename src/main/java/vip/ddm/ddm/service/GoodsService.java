@@ -8,14 +8,20 @@ import org.springframework.stereotype.Service;
 import vip.ddm.ddm.dao.GoodsMapper;
 import vip.ddm.ddm.dto.GoodsDto;
 import vip.ddm.ddm.dto.GoodsListDto;
+import vip.ddm.ddm.dto.IdQuery;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Discount;
 import vip.ddm.ddm.model.Goods;
 import vip.ddm.ddm.result.CodeMsg;
+import vip.ddm.ddm.utils.DateTools;
 import vip.ddm.ddm.utils.SessionUtil;
+import vip.ddm.ddm.vo.DateGoodsVo;
 import vip.ddm.ddm.vo.GoodsVo;
 
 import javax.validation.constraints.NotNull;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -59,16 +65,22 @@ public class GoodsService {
         goodsMapper.updateByPrimaryKeySelective(goods);
     }
 
-    public PageInfo<GoodsVo> goodsList(Goods goods,int page ,int rows,Integer storeId){
+    public PageInfo<GoodsVo> goodsList(Goods goods,int page ,int rows,Date startDate, Date endDate,Integer storeId){
         /*if(storeId == null && SessionUtil.getOnlineSession().getType() != 0){
             storeId = SessionUtil.getOnlineSession().getId();
         }*/
         List<Integer> storeIds = couponService.getStoreIds(storeId);
-        if(goods.getDate() == null){
-            goods.setDate(new Date());
+
+        if(startDate == null){
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                startDate = sf.parse(sf.format(new Date()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         PageHelper.startPage(page,rows);
-        List<GoodsVo> goodsVos = goodsMapper.findByParam(goods,storeIds);
+        List<GoodsVo> goodsVos = goodsMapper.findByParam(goods,startDate,endDate,storeIds);
         for(GoodsVo goodsVo:goodsVos){
             String images = goodsVo.getImages();
             String[] imageList = images.split(SPLITE_STR);
@@ -141,5 +153,19 @@ public class GoodsService {
             goods.setImages(image);
             goodsMapper.insert(goods);
         }
+    }
+
+    public List<DateGoodsVo> findByDate(IdQuery idQuery) throws ParseException {
+        List<DateGoodsVo> goodsVos = new ArrayList<>();
+        Integer storeId = idQuery.getStoreId();
+        if(storeId == null){
+            storeId = SessionUtil.getOnlineSession().getId();
+        }
+        List<Date> sevenDate = DateTools.getSevenDate();
+        for(Date date : sevenDate){
+            List<DateGoodsVo> goodsVos1 = goodsMapper.selectByDate(date, storeId);
+            goodsVos.addAll(goodsVos1);
+        }
+        return goodsVos;
     }
 }

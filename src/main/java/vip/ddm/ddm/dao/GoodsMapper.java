@@ -1,10 +1,12 @@
 package vip.ddm.ddm.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Goods;
+import vip.ddm.ddm.vo.DateGoodsVo;
 import vip.ddm.ddm.vo.GoodsVo;
 
+import java.util.Date;
 import java.util.List;
 
 public interface GoodsMapper {
@@ -64,8 +66,11 @@ public interface GoodsMapper {
      */
     int updateByPrimaryKey(Goods record);
 
-    List<GoodsVo> findByParam(@Param(value = "goods") Goods goods, @Param("storeIds")List<Integer> storeIds);
+    List<GoodsVo> findByParam(@Param(value = "goods") Goods goods,@Param("startDate")Date startDate,@Param("endDate")Date endDate, @Param("storeIds")List<Integer> storeIds);
 
     @Select("select * from goods where group_id = #{groupId} and status != 0")
     List<Goods> findByGroupId(@Param(value = "groupId") Integer groupId);
+
+    @Select("select * from goods g, goods_group gp where g.group_id = gp.id and g.date = #{date} and gp.store_id = #{storeId}")
+    List<DateGoodsVo> selectByDate(@Param("date") Date date,@Param("storeId")Integer storeId);
 }

@@ -117,8 +117,9 @@ public class CouponService {
                 List<Store> list = storeService.list();
                 for(Store store : list){
                     storeIds.add(store.getId());
-                    storeIds.add(SessionUtil.getOnlineSession().getId());
+
                 }
+                //storeIds.add(SessionUtil.getOnlineSession().getId());
             }else{
                 storeId = SessionUtil.getOnlineSession().getId();
                 storeIds.add(storeId);
@@ -129,4 +130,8 @@ public class CouponService {
         return storeIds;
     }
 
+    public List<Coupon> findByStatus(int status) {
+
+        return couponMapper.findByStatus(status);
+    }
 }

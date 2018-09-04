@@ -226,7 +226,7 @@
   </update>
 
   <select id="findByParam" parameterType="map" resultType="vip.ddm.ddm.vo.GoodsVo">
-    select g.*, p.group_name, s.name as storeName
+    select g.*, p.group_name, s.name as storeName, s.id as storeId
     from goods_group p, goods g, store s
     where p.id = g.group_id and p.store_id = s.id
     <if test="storeIds != null and storeIds.size()>0">
@@ -235,11 +235,15 @@
         #{item}
       </foreach>
     </if>
-    <if test="goods != null">
-      <if test="goods.date != null">
-        and g.date = #{goods.date}
-      </if>
+    <if test="startDate != null">
+      and g.date &gt;= #{startDate}
+    </if>
 
+    <if test="endDate != null">
+      and g.date &lt; #{endDate}
+    </if>
+
+    <if test="goods != null">
       <if test="goods.goodsName !=null and goods.goodsName != '' ">
         and g.goods_name like CONCAT('%','${goods.goodsName}','%')
       </if>

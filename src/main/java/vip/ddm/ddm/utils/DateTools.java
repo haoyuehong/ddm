@@ -30,13 +30,13 @@ public class DateTools {
         return weekDays[w];
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         //System.out.println(DateTools.dateToWeek("2019:08:29"));
-        System.out.println(changeDay());
-    }*/
+        System.out.println(getSevenDate());
+    }
 
-    public static List<Date> changeDay(){
+    public static List<Date> getSevenDate() throws ParseException {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         List<Date> dates = new ArrayList<>();
         Calendar calen = Calendar.getInstance();
@@ -44,8 +44,9 @@ public class DateTools {
             calen.setTime(new Date());
             calen.add(Calendar.DATE, i);
             Date date = calen.getTime();
-            //System.out.println("加"+i+"天后的日期:"+f.format(date));
-            dates.add(date);
+            Date parse = f.parse(f.format(date));
+            //System.out.println("加"+i+"天后的日期:"+);
+            dates.add(parse);
         }
         return dates;
     }

@@ -13,7 +13,11 @@ import vip.ddm.ddm.dto.IdQuery;
 import vip.ddm.ddm.model.Goods;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.GoodsService;
+import vip.ddm.ddm.vo.DateGoodsVo;
 import vip.ddm.ddm.vo.GoodsVo;
+
+import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/goods")
@@ -24,7 +28,7 @@ public class GoodsController {
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     public Result list(@RequestBody GoodsQuesryDto quesryDto){
-        PageInfo<GoodsVo> pageInfo = goodsService.goodsList(quesryDto.getGoods(), quesryDto.getPage(), quesryDto.getRows(), quesryDto.getStoreId());
+        PageInfo<GoodsVo> pageInfo = goodsService.goodsList(quesryDto.getGoods(), quesryDto.getPage(), quesryDto.getRows(),quesryDto.getStartDate(),quesryDto.getEndDate(), quesryDto.getStoreId());
         return Result.success(pageInfo);
     }
 
@@ -44,5 +48,12 @@ public class GoodsController {
     public Result save(@RequestBody IdQuery idQuery){
         goodsService.delete(idQuery.getId());
         return Result.success(true);
+    }
+
+    @RequestMapping("/dateGoods")
+    public Result dateGoods(@RequestBody IdQuery idQuery) throws ParseException {
+        List<DateGoodsVo> dateGoodsVoList = goodsService.findByDate(idQuery);
+        return Result.success(dateGoodsVoList);
+
     }
 }

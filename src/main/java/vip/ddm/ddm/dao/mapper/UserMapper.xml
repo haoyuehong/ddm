@@ -203,7 +203,7 @@
     <if test="type != null">
       and u.type = #{type}
     </if>
-    <if test="storeIds != null and storeId.size() > 0">
+    <if test="storeIds != null and storeIds.size() > 0">
       and u.staore_id in
       <foreach collection="storeIds" open="(" separator="," close=")" item="item">
         #{item}

@@ -46,4 +46,6 @@ public class GoodsVo extends Goods {
 
     private String storeName;
 
+    private Integer storeId;
+
 }

@@ -21,4 +21,6 @@ public class IdQuery implements Serializable {
     private Integer parentId;
 
     private Integer type;
+
+    private Integer storeId;
 }

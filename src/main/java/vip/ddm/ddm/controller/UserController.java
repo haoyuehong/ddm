@@ -27,7 +27,7 @@ public class UserController {
 
 
     @RequestMapping("/updateType")
-    public Result list(UserTypeDto userTypeDto){
+    public Result list(@RequestBody UserTypeDto userTypeDto){
         userService.updateType(userTypeDto);
         return Result.success(true);
     }

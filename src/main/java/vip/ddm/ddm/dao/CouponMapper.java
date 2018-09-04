@@ -60,4 +60,7 @@ public interface CouponMapper {
 
     @Select("select * from coupon where id = #{couponId} and status = #{status}")
     Coupon findByIdAndStatus(@Param("couponId") Integer couponId, @Param("status") Integer status);
+
+    @Select("select * from coupon where status = #{status}")
+    List<Coupon> findByStatus(int status);
 }
