@@ -1,7 +1,7 @@
 package vip.ddm.ddm.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Discount;
 import vip.ddm.ddm.vo.DiscountVo;
 
@@ -60,4 +60,7 @@ public interface DiscountMapper {
 
     @Select("select * from discount where goods_id = #{goodsId} and status = 0")
     Discount findByGoodsId(@Param("goodsId")Integer goodsId);
+
+    @Select("select * from discount where status = #{status}")
+    List<Discount> findByStatus(@Param("status") int status);
 }

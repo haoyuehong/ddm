@@ -1,7 +1,7 @@
 package vip.ddm.ddm.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.Store;
 
 import java.util.List;

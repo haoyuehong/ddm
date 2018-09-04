@@ -82,4 +82,9 @@ public class DisCountService {
 
         return discountMapper.findByGoodsId(id);
     }
+
+    public List<Discount> findByStatus(int status) {
+
+        return discountMapper.findByStatus(status);
+    }
 }

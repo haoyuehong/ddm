@@ -61,4 +61,8 @@ public class FullDownService {
         List<Integer> storeIds = couponService.getStoreIds(fullDown.getStoreId());
         return fullDownMapper.findList(fullDown,storeIds);
     }
+
+    public List<FullDown> findByStatus(int i) {
+        return null;
+    }
 }

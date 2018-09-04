@@ -10,7 +10,9 @@ import vip.ddm.ddm.dto.StoreDto;
 import vip.ddm.ddm.model.Store;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.StoreService;
+import vip.ddm.ddm.utils.SessionUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,14 +31,23 @@ public class StortController {
     @RequestMapping("/updateStatus")
     public Result updateStatus(@RequestBody StoreDto storeDto){
         storeService.updateStatus(storeDto.getId(),storeDto.getStatus());
+
         return Result.success(true);
     }
 
 
     @RequestMapping("/list")
     public Result list(){
-        List<Store> list = storeService.list();
-        return Result.success(list);
+        List<Store> storeList = new ArrayList<>();
+        if(SessionUtil.getOnlineSession().getType() == 0){
+            storeList = storeService.finbyparent(SessionUtil.getOnlineSession().getId(), 1);
+        }else if(SessionUtil.getOnlineSession().getType() == -1){
+            storeList = storeService.list();
+        }else{
+            Store store = SessionUtil.getOnlineSession();
+            storeList.add(store);
+        }
+        return Result.success(storeList);
     }
 
     @RequestMapping("/updateOrderStatus")
@@ -47,6 +58,6 @@ public class StortController {
 
     @RequestMapping("/finbyparent")
     public Result findbyparent(@RequestBody IdQuery idQuery){
-       return Result.success(storeService.finbyparent(idQuery.getParentId(),idQuery.getType()));
+       return Result.success(storeService.finbyparent(idQuery.getId(),idQuery.getType()));
     }
 }

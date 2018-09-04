@@ -151,14 +151,14 @@
     select d.*,g.goods_name
     from discount d, goods g
     where d.goods_id = g.id
-    <if test="status == null">
+    <if test="discount.status == null">
       and d.status = 0
     </if>
-    <if test="status != null">
-      and d.status = #{status}
+    <if test="discount.status != null">
+      and d.status = #{discount.status}
     </if>
-    <if test="goodsId != null">
-      and goods_id = #{goodsId}
+    <if test="discount.goodsId != null">
+      and d.goods_id = #{goodsId}
     </if>
   </select>
 </mapper>
