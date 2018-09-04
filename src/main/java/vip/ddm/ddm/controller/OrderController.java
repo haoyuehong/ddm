@@ -1,5 +1,6 @@
 package vip.ddm.ddm.controller;
 
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.OrderService;
+import vip.ddm.ddm.vo.OrderVo;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -41,12 +43,13 @@ public class OrderController {
 
     @RequestMapping("/list")
     public Result list(@RequestBody OrderQueryDto orderQueryDto){
+        PageInfo<OrderVo> list;
         try {
-            orderService.list(orderQueryDto);
+            list = orderService.list(orderQueryDto);
         } catch (ParseException e) {
             throw new GlobleException(CodeMsg.SERVER_ERROR);
         }
-        return Result.success(true);
+        return Result.success(list);
     }
 
 

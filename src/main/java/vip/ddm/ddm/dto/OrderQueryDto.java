@@ -19,5 +19,7 @@ public class OrderQueryDto extends BaseQuery {
 
     private Integer storid;
 
-    private Date date;
+    private Date startDate;
+
+    private Date endDate;
 }

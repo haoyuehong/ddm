@@ -240,6 +240,10 @@
     select o.*,u.*,a.*,s.name as storeName
     from orders o,user u,address a,store s
     where o.user_id = u.id and o.address_id = a.id and o.storeid = s.id
+    and o.delivery_time &gt;= #{startDate}
+    <if test="endDate != null">
+      and o.delivery_time &lt;= #{endDate}
+    </if>
     <if test="key != null and key != ''">
       and o.id like CONCAT('%','${key}','%') or u.nickname like CONCAT('%','${key}','%') or a.address like CONCAT('%','${key}','%')
     </if>
@@ -251,13 +255,9 @@
       </foreach>
     </if>
 
-    <if test="status != null">
-      and o.status = #{status}
-    </if>
-
-    <if test="status != null">
-      and o.status = #{status}
-    </if>
+    <!--<if test="orders.status != null">
+      and o.status = #{orders.status}
+    </if>-->
     order by o.date ASC,o.status ASC
   </select>
 </mapper>

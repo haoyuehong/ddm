@@ -59,10 +59,10 @@ public interface OrdersMapper {
 
     List<OrderVo> list(@Param("order") Orders order, @Param("key") String key);
 
-    @Select("select * from order where user_id = #{userId} and status <= 3")
+    @Select("select * from orders where user_id = #{userId} and status <= 3")
     List<Orders> selectByUserId(@Param("userId") Integer userId);
 
-    List<OrderVo> findList(@Param("order") Orders order, @Param("key")String key, @Param("storeIds")List<Integer> storeIds, @Param("today")Date today, @Param("tomrrow")Date tomrrow);
+    List<OrderVo> findList(@Param("orders") Orders orders, @Param("key")String key, @Param("storeIds")List<Integer> storeIds, @Param("startDate")Date startDate, @Param("endDate")Date endDate);
 
 
 }

@@ -119,12 +119,15 @@ public class OrderService {
         /*if(orderQueryDto.getOrder().getStoreid() == null && SessionUtil.getOnlineSession().getType() != 0){
             orderQueryDto.getOrder().setStoreid(SessionUtil.getOnlineSession().getId());
         }*/
-        Date tomrrow = DateTools.tomrrow();
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        String formatDate = sf.format(new Date());
-        Date today = sf.parse(formatDate);
+        Date startDate = orderQueryDto.getStartDate();
+        Date endDate = orderQueryDto.getEndDate();
+        if(startDate == null){
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            String formatDate = sf.format(new Date());
+            startDate = sf.parse(formatDate);
+        }
         PageHelper.startPage(orderQueryDto.getPage(),orderQueryDto.getRows());
-        List<OrderVo> orderVos = orderMapper.findList(orderQueryDto.getOrder(),orderQueryDto.getKey(),storeIds,today,tomrrow);
+        List<OrderVo> orderVos = orderMapper.findList(orderQueryDto.getOrder(),orderQueryDto.getKey(),storeIds,startDate,endDate);
         return new PageInfo<>(orderVos);
     }
 

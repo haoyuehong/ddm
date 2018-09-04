@@ -1,5 +1,6 @@
 package vip.ddm.ddm.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import vip.ddm.ddm.model.User;
 @NoArgsConstructor
 @Setter
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserVo extends User {
     //订单量
     private int orderNum;

@@ -20,9 +20,9 @@ public class UserController {
 
 
     @RequestMapping("/list")
-    public Result list(BaseQuery baseQuery){
+    public Result list(@RequestBody UserQueryDto userQueryDto){
 
-        return Result.success( userService.list(baseQuery));
+        return Result.success( userService.list(userQueryDto));
     }
 
 
@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @RequestMapping("/checkSave")
-    public Result checkSave(String code){
-        return Result.success(userService.checkSave(code));
+    public Result checkSave(String code,Integer storeId){
+        return Result.success(userService.checkSave(code,storeId));
     }
 
     @RequestMapping("/findCoupon")

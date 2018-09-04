@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import vip.ddm.ddm.dao.UserMapper;
 import vip.ddm.ddm.dto.BaseQuery;
 import vip.ddm.ddm.dto.UserDto;
+import vip.ddm.ddm.dto.UserQueryDto;
 import vip.ddm.ddm.dto.UserTypeDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Coupon;
@@ -32,6 +33,8 @@ public class UserService {
     private UserCouponService userCouponService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private CouponService couponService;
 
     private String code;
     private String session_key;
@@ -39,12 +42,12 @@ public class UserService {
     /**
      * 检测用户是否已经保存
      */
-    public CodeMsg checkSave(String code){
+    public CodeMsg checkSave(String code,Integer storeId){
         this.code = code;
         JSONObject jsonObject = WxGetUserInfo.getSessionKey(code);
         String openid = (String)jsonObject.get("openid");
         session_key = (String)jsonObject.get("session_key");
-        User user = userMapper.findByOpenId(openid);
+        User user = userMapper.findByOpenId(openid,storeId);
         if(user != null){
             return CodeMsg.USER_SAVED.fillArgs(user.getId());
         }else{
@@ -61,6 +64,7 @@ public class UserService {
         user.setType(0);
         user.setDate(new Date());
         user.setAvatarurl((String)jsonObject.get("avatarUrl"));
+        user.setStaoreId(userDto.getStoreId());
         userMapper.insert(user);
     }
 
@@ -106,13 +110,14 @@ public class UserService {
         userMapper.updateByPrimaryKey(user);
     }
 
-    public PageInfo<UserVo> list(BaseQuery baseQuery){
+    public PageInfo<UserVo> list(UserQueryDto userQueryDto){
+        List<Integer> storeIds = couponService.getStoreIds(userQueryDto.getUser().getStaoreId());
         List<UserVo> userVoList = new ArrayList<>();
-        PageHelper.startPage(baseQuery.getPage(),baseQuery.getRows());
-        List<User> userList = userMapper.selectUserList(baseQuery.getKey());
+        PageHelper.startPage(userQueryDto.getPage(),userQueryDto.getRows());
+        List<User> userList = userMapper.selectUserList(userQueryDto.getKey(),userQueryDto.getUser().getType(),storeIds);
         for(User user : userList){
             UserVo userVo = new UserVo();
-            BeanUtils.copyProperties(userVo,user);
+            BeanUtils.copyProperties(user,userVo);
             List<Coupon> coupons = userCouponService.selectByUserId(user.getId());
             userVo.setCouponNum(coupons.size());
             List<Orders> orders = orderService.findByUserId(user.getId());

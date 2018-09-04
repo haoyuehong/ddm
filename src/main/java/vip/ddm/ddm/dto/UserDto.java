@@ -24,4 +24,6 @@ public class UserDto {
     private String iv;
 
     private Integer id;
+
+    private Integer storeId;
 }

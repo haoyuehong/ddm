@@ -1,9 +1,8 @@
 package vip.ddm.ddm.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.data.repository.query.Param;
 import vip.ddm.ddm.model.User;
-import vip.ddm.ddm.vo.UserVo;
 
 import java.util.List;
 
@@ -56,9 +55,9 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User record);
 
-    @Select("select * from user where openid = #{openid}")
-    User findByOpenId(@Param("openid") String openid);
+    @Select("select * from user where openid = #{openid} and store_id = #{storeId}")
+    User findByOpenId(@Param("openid") String openid,@Param("storeId")Integer storeId);
 
 
-    List<User> selectUserList(@Param("key") String key);
+    List<User> selectUserList(@Param("key") String key, @Param("type")Integer type,@Param("storeIds")List<Integer> storeIds);
 }
