@@ -94,7 +94,7 @@ public class GoodsService {
                 goodsVo.setStrStatus("已删除");
             }
             String taste = goodsVo.getTaste();
-            if(!taste.equals("")){
+            if(taste != null && !taste.equals("")){
                 String[] tastes = taste.split(SPLITE_STR);
                 List<String> tastList = Arrays.asList(tastes);
                 goodsVo.setTasteStr(tastList);
