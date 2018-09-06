@@ -18,6 +18,6 @@ public class UploadController {
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     public Result upload(MultipartFile file) throws IOException {
-        return Result.success(dfsClient.uploadFile(file));
+        return Result.success("https://image.hz1202.com/"+dfsClient.uploadFile(file));
     }
 }

@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import vip.ddm.ddm.model.Coupon;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -23,7 +22,7 @@ public class CouponDto implements Serializable {
 
     private Integer id;
 
-    @NotEmpty(message = "优惠卷名称不能为空")
+    @NotNull(message = "优惠卷名称不能为空")
     private String name;
 
     private String descr;
@@ -44,7 +43,7 @@ public class CouponDto implements Serializable {
 
     private Byte type;//0 无门槛指定价格（0）  1 指定品类指定价格  2全品类指定价格   3指定商品指定价格
 
-    private List<Integer> storeId;
+    private Integer storeId;
 
     private List<Integer> goodsIds;
 

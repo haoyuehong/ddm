@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -19,15 +18,15 @@ public class StoreDto implements Serializable {
 
     private Integer id;
 
-    @NotEmpty
+    @NotNull
     private String name;
 
-    @NotEmpty
+    @NotNull
     private String username;
 
     private String address;
 
-    @NotEmpty
+    @NotNull
     private String password;
 
     private String phone;

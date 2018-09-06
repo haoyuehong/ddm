@@ -57,7 +57,7 @@ public class StoreService {
             stores = storeMapper.list();
         }else{
             Integer parentId = SessionUtil.getOnlineSession().getId();
-            stores = storeMapper.findByParent(parentId,null);
+            stores = storeMapper.findByParent(parentId);
             stores.add(SessionUtil.getOnlineSession());
         }
         return stores;
@@ -81,7 +81,7 @@ public class StoreService {
         storeMapper.updateByPrimaryKeySelective(store);
     }
 
-    public List<Store> finbyparent(Integer id,Integer type) {
-        return storeMapper.findByParent(id,type);
+    public List<Store> finbyparent(Integer id) {
+        return storeMapper.findByParent(id);
     }
 }

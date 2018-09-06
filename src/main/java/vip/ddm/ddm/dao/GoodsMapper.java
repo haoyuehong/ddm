@@ -73,4 +73,7 @@ public interface GoodsMapper {
 
     @Select("select * from goods g, goods_group gp where g.group_id = gp.id and g.date = #{date} and gp.store_id = #{storeId}")
     List<DateGoodsVo> selectByDate(@Param("date") Date date,@Param("storeId")Integer storeId);
+
+    @Select("select g.* from goods g,goods_group gp,store s where g.group_id = gp.id and gp.store_id = s.id and s.id = #{storeId} and gp.id = #{groupId} and g.date = #{date} and g.status = 0")
+    List<Goods> findByGroupIdAndDate(@Param("storeId") Integer storeId, @Param("groupId") Integer groupId, @Param("date") Date date);
 }

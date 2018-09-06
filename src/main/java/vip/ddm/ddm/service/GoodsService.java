@@ -29,7 +29,7 @@ import java.util.List;
 @Service
 public class GoodsService {
 
-    private static  String  SPLITE_STR = "##";
+    public static  String  SPLITE_STR = "##";
 
     @Autowired
     private GoodsMapper goodsMapper;
@@ -167,5 +167,10 @@ public class GoodsService {
             goodsVos.addAll(goodsVos1);
         }
         return goodsVos;
+    }
+
+    public List<Goods> findByStoreId(Integer storeId, Integer groupId, Date date) {
+
+        return  goodsMapper.findByGroupIdAndDate(storeId,groupId,date);
     }
 }

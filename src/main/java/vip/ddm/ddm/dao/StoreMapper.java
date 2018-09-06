@@ -61,5 +61,5 @@ public interface StoreMapper {
     @Select("select * from store where username = #{name}")
     List<Store> findByName(@Param("name") String name);
 
-    List<Store> findByParent(@Param("parentId") Integer parentId,@Param("type")Integer type);
+    List<Store> findByParent(@Param("parentId") Integer parentId);
 }

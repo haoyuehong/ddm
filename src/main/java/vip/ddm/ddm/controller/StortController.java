@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import vip.ddm.ddm.dto.BaseQuery;
 import vip.ddm.ddm.dto.IdQuery;
 import vip.ddm.ddm.dto.StoreDto;
+import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Store;
+import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.StoreService;
 import vip.ddm.ddm.utils.SessionUtil;
@@ -40,7 +42,8 @@ public class StortController {
     public Result list(){
         List<Store> storeList = new ArrayList<>();
         if(SessionUtil.getOnlineSession().getType() == 0){
-            storeList = storeService.finbyparent(SessionUtil.getOnlineSession().getId(), 1);
+            storeList = storeService.finbyparent(SessionUtil.getOnlineSession().getId());
+            storeList.add(SessionUtil.getOnlineSession());
         }else if(SessionUtil.getOnlineSession().getType() == -1){
             storeList = storeService.list();
         }else{
@@ -56,8 +59,14 @@ public class StortController {
         return Result.success(true);
     }
 
-    @RequestMapping("/finbyparent")
-    public Result findbyparent(@RequestBody IdQuery idQuery){
-       return Result.success(storeService.finbyparent(idQuery.getId(),idQuery.getType()));
+    @RequestMapping("/getParent")
+    public Result findbyparent(){
+        List<Store> list = new ArrayList<>();
+        if(SessionUtil.getOnlineSession().getType() == -1){
+            list = storeService.finbyparent(SessionUtil.getOnlineSession().getId());
+        }else if(SessionUtil.getOnlineSession().getType() == 0){
+            list.add(SessionUtil.getOnlineSession());
+        }
+       return Result.success(list);
     }
 }

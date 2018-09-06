@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import vip.ddm.ddm.utils.SessionUtil;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -22,7 +21,7 @@ public class FullDownDto implements Serializable {
 
     private Integer id;
 
-    @NotEmpty
+    @NotNull
     private String name;
 
     private String descr;

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @MapperScan("vip.ddm.ddm.dao")
 @EnableScheduling
+@EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)
 public class DdmApplication {
 
     public static void main(String[] args) {

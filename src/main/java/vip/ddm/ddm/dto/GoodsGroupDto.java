@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -18,7 +18,7 @@ public class GoodsGroupDto implements Serializable {
 
     private Integer id;
 
-    @NotEmpty(message = "分组名不能为空")
+    @NotNull(message = "分组名不能为空")
     private String groupName;
 
     private Date date;

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
@@ -14,13 +14,13 @@ import javax.validation.constraints.NotEmpty;
 public class UserDto {
 
 
-    @NotEmpty
+    @NotNull
     private String code;
 
-    @NotEmpty
+    @NotNull
     private String encryptedData;
 
-    @NotEmpty
+    @NotNull
     private String iv;
 
     private Integer id;

@@ -233,8 +233,5 @@
     select *
     from store
     where parent_id = #{parentId}
-    <if test="type != null">
-      and type = #{type}
-    </if>
   </select>
 </mapper>
