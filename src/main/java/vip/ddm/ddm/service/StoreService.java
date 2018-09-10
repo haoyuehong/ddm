@@ -84,4 +84,9 @@ public class StoreService {
     public List<Store> finbyparent(Integer id) {
         return storeMapper.findByParent(id);
     }
+
+    public Store findById(Integer storeId) {
+        return storeMapper.selectByPrimaryKey(storeId);
+
+    }
 }

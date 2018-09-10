@@ -260,6 +260,6 @@
         and g.status = #{goods.status}
       </if>
     </if>
-    ORDER BY g.date DESC
+    ORDER BY g.date ASC
   </select>
 </mapper>

@@ -103,7 +103,6 @@ public class GoodsService {
             if(discount != null){
                 goodsVo.setDiscount("参与打折");
                 goodsVo.setDiscountPrice(discount.getDiscountPrice());
-
             }
         }
         return new PageInfo<>(goodsVos);

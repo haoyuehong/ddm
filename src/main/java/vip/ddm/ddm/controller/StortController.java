@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vip.ddm.ddm.common.OnlineUserInfo;
 import vip.ddm.ddm.dto.BaseQuery;
 import vip.ddm.ddm.dto.IdQuery;
 import vip.ddm.ddm.dto.StoreDto;
@@ -25,28 +26,28 @@ public class StortController {
     private StoreService storeService;
 
     @RequestMapping("/save")
-    public Result svae(@RequestBody StoreDto storeDto){
+    public Result svae(@RequestBody StoreDto storeDto) {
         storeService.save(storeDto);
         return Result.success(true);
     }
 
     @RequestMapping("/updateStatus")
-    public Result updateStatus(@RequestBody StoreDto storeDto){
-        storeService.updateStatus(storeDto.getId(),storeDto.getStatus());
+    public Result updateStatus(@RequestBody StoreDto storeDto) {
+        storeService.updateStatus(storeDto.getId(), storeDto.getStatus());
 
         return Result.success(true);
     }
 
 
     @RequestMapping("/list")
-    public Result list(){
+    public Result list() {
         List<Store> storeList = new ArrayList<>();
-        if(SessionUtil.getOnlineSession().getType() == 0){
+        if (SessionUtil.getOnlineSession().getType() == 0) {
             storeList = storeService.finbyparent(SessionUtil.getOnlineSession().getId());
             storeList.add(SessionUtil.getOnlineSession());
-        }else if(SessionUtil.getOnlineSession().getType() == -1){
+        } else if (SessionUtil.getOnlineSession().getType() == -1) {
             storeList = storeService.list();
-        }else{
+        } else {
             Store store = SessionUtil.getOnlineSession();
             storeList.add(store);
         }
@@ -54,19 +55,26 @@ public class StortController {
     }
 
     @RequestMapping("/updateOrderStatus")
-    public Result updateOrderStatus(@RequestBody StoreDto storeDto){
+    public Result updateOrderStatus(@RequestBody StoreDto storeDto) {
         storeService.updateOrderStatus(storeDto);
         return Result.success(true);
     }
 
     @RequestMapping("/getParent")
-    public Result findbyparent(){
+    public Result findbyparent() {
         List<Store> list = new ArrayList<>();
-        if(SessionUtil.getOnlineSession().getType() == -1){
+        if (SessionUtil.getOnlineSession().getType() == -1) {
             list = storeService.finbyparent(SessionUtil.getOnlineSession().getId());
-        }else if(SessionUtil.getOnlineSession().getType() == 0){
+        } else if (SessionUtil.getOnlineSession().getType() == 0) {
             list.add(SessionUtil.getOnlineSession());
         }
-       return Result.success(list);
+        return Result.success(list);
+    }
+
+    @RequestMapping("/status")
+    public Result getStoreStatus() {
+        Integer storeId = SessionUtil.getOnlineSession().getId();
+        Store store = storeService.findById(storeId);
+        return Result.success(store);
     }
 }
