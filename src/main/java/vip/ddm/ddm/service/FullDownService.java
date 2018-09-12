@@ -63,6 +63,7 @@ public class FullDownService {
     }
 
     public List<FullDown> findByStatus(int i) {
-        return null;
+
+        return fullDownMapper.findByStatus(0);
     }
 }

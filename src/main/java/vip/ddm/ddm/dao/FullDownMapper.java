@@ -60,4 +60,7 @@ public interface FullDownMapper {
 
     @Select("select * from full_down where id = #{fullDownId} and status = #{status}")
     FullDown findByIdAndStatus(@Param("fullDownId") Integer fullDownId, @Param("status") Integer status);
+
+    @Select("select * from full_down where status = #{status}")
+    List<FullDown> findByStatus(int status);
 }

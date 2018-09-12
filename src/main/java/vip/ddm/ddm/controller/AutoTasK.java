@@ -1,6 +1,8 @@
 package vip.ddm.ddm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import vip.ddm.ddm.dao.CouponMapper;
@@ -17,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class AutoTasK {
+public class AutoTasK implements ApplicationRunner {
 
     @Autowired
     private CouponService couponService;
@@ -74,5 +76,30 @@ public class AutoTasK {
     }
 
 
-
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        List<Coupon> coupons =  couponService.findByStatus(0);
+        for(Coupon coupon : coupons){
+            if(new Date().after(coupon.getDate())){
+                coupon.setStatus((byte)2);
+                couponMapper.updateByPrimaryKeySelective(coupon);
+            }
+        }
+        List<Discount> discounts = disCountService.findByStatus(0);
+        for(Discount discount : discounts){
+            if(discount.getDate() != null){
+                if(new Date().after(discount.getDate())){
+                    discount.setStatus((byte)2);
+                    discountMapper.updateByPrimaryKeySelective(discount);
+                }
+            }
+        }
+        List<FullDown> fullDowns = fullDownService.findByStatus(0);
+        for(FullDown fullDown : fullDowns){
+            if(new Date().after(fullDown.getDate())){
+                fullDown.setStatus((byte)2);
+                fullDownMapper.updateByPrimaryKeySelective(fullDown);
+            }
+        }
+    }
 }
