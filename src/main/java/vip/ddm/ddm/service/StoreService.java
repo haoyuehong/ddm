@@ -4,14 +4,17 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vip.ddm.ddm.common.OnlineUserInfo;
 import vip.ddm.ddm.dao.StoreMapper;
 import vip.ddm.ddm.dto.BaseQuery;
 import vip.ddm.ddm.dto.StoreDto;
+import vip.ddm.ddm.dto.StoreOrderDto;
 import vip.ddm.ddm.exception.GlobleException;
 import vip.ddm.ddm.model.Store;
 import vip.ddm.ddm.result.CodeMsg;
 import vip.ddm.ddm.utils.EncryptTool;
 import vip.ddm.ddm.utils.SessionUtil;
+import vip.ddm.ddm.vo.OrderStatusVo;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -64,19 +67,19 @@ public class StoreService {
     }
 
 
-    public void updateOrderStatus(StoreDto storeDto) {
-        if(storeDto.getId() == null){
+    public void updateOrderStatus(StoreOrderDto storeOrderDto) {
+        if(storeOrderDto.getId() == null){
             throw new GlobleException(CodeMsg.STORE_ID_NULL);
         }
-        Store store = storeMapper.selectByPrimaryKey(storeDto.getId());
+        Store store = storeMapper.selectByPrimaryKey(storeOrderDto.getId());
         if(store == null){
             throw new GlobleException(CodeMsg.STORE_NULL);
         }
-        if(storeDto.getAmOrderStatus() != null){
-            store.setAmOrderStatus(storeDto.getAmOrderStatus());
+        if(storeOrderDto.getAmOrderStatus() != null){
+            store.setAmOrderStatus(storeOrderDto.getAmOrderStatus());
         }
-        if(storeDto.getPmOrderStatus() != null){
-            store.setAmOrderStatus(storeDto.getPmOrderStatus());
+        if(storeOrderDto.getPmOrderStatus() != null){
+            store.setPmOrderStatus(storeOrderDto.getPmOrderStatus());
         }
         storeMapper.updateByPrimaryKeySelective(store);
     }
@@ -89,4 +92,8 @@ public class StoreService {
         return storeMapper.selectByPrimaryKey(storeId);
 
     }
+
+    /*public OrderStatusVo getOrderStatus(){
+        OnlineUserInfo onlineSession = SessionUtil.getOnlineSession();
+    }*/
 }

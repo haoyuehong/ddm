@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vip.ddm.ddm.dto.StoreDto;
+import vip.ddm.ddm.dto.StoreOrderDto;
 import vip.ddm.ddm.model.Store;
 import vip.ddm.ddm.result.Result;
 import vip.ddm.ddm.service.StoreService;
 import vip.ddm.ddm.utils.SessionUtil;
+import vip.ddm.ddm.vo.OrderStatusVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +54,16 @@ public class StortController {
     }
 
     @RequestMapping("/updateOrderStatus")
-    public Result updateOrderStatus(@RequestBody StoreDto storeDto) {
-        storeService.updateOrderStatus(storeDto);
+    public Result updateOrderStatus(@RequestBody StoreOrderDto storeOrderDto) {
+        storeService.updateOrderStatus(storeOrderDto);
         return Result.success(true);
     }
+
+    /*@RequestMapping("/getOrderStatus")
+    public Result<OrderStatusVo> getOrderStatus(){
+        return Result.success(storeService.getOrderStatus());
+    }*/
+
 
     @RequestMapping("/getParent")
     public Result findbyparent() {
