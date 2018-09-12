@@ -55,7 +55,7 @@ public interface StoreMapper {
      */
     int updateByPrimaryKey(Store record);
 
-    @Select("select * from store")
+    @Select("select * from store where status = 0")
     List<Store> list();
 
     @Select("select * from store where username = #{name}")
