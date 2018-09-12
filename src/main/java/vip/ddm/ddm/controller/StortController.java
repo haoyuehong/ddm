@@ -34,6 +34,8 @@ public class StortController {
     }
 
 
+
+
     @RequestMapping("/list")
     public Result list() {
         List<Store> storeList = new ArrayList<>();
